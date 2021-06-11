@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,83 +26,63 @@ public class MainActivity extends AppCompatActivity {
     EditText productBox;
     EditText priceBox;
 
+    private EditText eName;
+    private EditText ePassword;
+
     MyDBHandler dbHandler;
-    Button btnView;
+    private Button btnLogin;
+
+    private String AdminUsername = "Admin@uottawa.ca";
+    private String AdminPassword = "AdminPassword";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         dbHandler = new MyDBHandler(this);
 
-        idView = (TextView) findViewById(R.id.productID);
-        productBox = (EditText) findViewById(R.id.productName);
-        priceBox = (EditText) findViewById(R.id.productPrice);
+        eName = findViewById(R.id.username);
+        ePassword = findViewById(R.id.password);
+        btnLogin = findViewById(R.id.btnlogin);
 
-        btnView = (Button)findViewById(R.id.btnView);
-
-        btnView.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this, ViewListContents.class);
-                startActivity(intent);
+                String inputName = eName.getText().toString();
+                String inputPass = ePassword.getText().toString();
+
+                if(inputName.isEmpty() || inputPass.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Please enter a username and password.", Toast.LENGTH_SHORT).show();
+                }
+                else if(AdminValidation(inputName, inputPass)){
+                    Toast.makeText(getApplicationContext(), "Hello Admin", Toast.LENGTH_SHORT).show();
+
+                }
+                else if(ValidUserName(inputName)){
+                    Toast.makeText(getApplicationContext(), "Valid Username.", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Your username or password is incorrect.", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
-        });
 
+
+            });
     }
 
-    public void newProduct (View view){
-        MyDBHandler dbHandler = new MyDBHandler(this);
-
-
-        double price = Double.parseDouble(priceBox.getText().toString());
-
-        Product product = new Product(productBox.getText().toString(), price);
-
-        dbHandler.addProduct(product);
-
-        productBox.setText("");
-        priceBox.setText("");
-
-
-
-    }
-
-    public void lookupProduct (View view){
-        MyDBHandler dbHandler = new MyDBHandler(this);
-
-        Product product = dbHandler.findProduct(productBox.getText().toString());
-
-        if(product != null){
-            idView.setText(String.valueOf(product.getID()));
-            priceBox.setText(String.valueOf(product.getPrice()));
-
-        } else{
-            idView.setText("No Match Found");
+    private boolean AdminValidation(String name, String password){
+        if(name.equals(AdminUsername) && password.equals(AdminPassword)){
+            return true;
         }
+        return false;
     }
-
-    public void removeProduct (View view){
-        MyDBHandler dbHandler = new MyDBHandler(this);
-
-        boolean result = dbHandler.deleteProduct(productBox.getText().toString());
-
-        if(result){
-            idView.setText("Record Deleted");
-            productBox.setText("");
-            priceBox.setText("");
-        } else {
-            idView.setText("No Match Found");
-        }
+    private boolean ValidUserName(String username){
+        return (!TextUtils.isEmpty(username) && Patterns.EMAIL_ADDRESS.matcher(username).matches());
     }
-
-    public void listView(){
-        MyDBHandler dbHandler = new MyDBHandler(this);
-
-    }
-
-
 }
