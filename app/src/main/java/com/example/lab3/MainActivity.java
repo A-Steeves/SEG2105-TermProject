@@ -32,14 +32,16 @@ public class MainActivity extends AppCompatActivity {
     MyDBHandler dbHandler;
     private Button btnLogin;
 
-    private String AdminUsername = "Admin@uottawa.ca";
-    private String AdminPassword = "AdminPassword";
 
+
+    adminCredentials adminDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        adminDetails = new adminCredentials();
 
         dbHandler = new MyDBHandler(this);
 
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 else if(AdminValidation(inputName, inputPass)){
                     Toast.makeText(getApplicationContext(), "Hello Admin", Toast.LENGTH_SHORT).show();
 
+                    openAdmin();
+
                 }
                 else if(ValidUserName(inputName)){
                     Toast.makeText(getApplicationContext(), "Valid Username.", Toast.LENGTH_SHORT).show();
@@ -77,12 +81,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean AdminValidation(String name, String password){
-        if(name.equals(AdminUsername) && password.equals(AdminPassword)){
+        if(name.equals(adminDetails.getUsername()) && password.equals(adminDetails.getPassword())){
             return true;
         }
         return false;
     }
     private boolean ValidUserName(String username){
         return (!TextUtils.isEmpty(username) && Patterns.EMAIL_ADDRESS.matcher(username).matches());
+    }
+
+
+
+    private void openAdmin(){
+        Intent intent = new Intent (this, AdminscreenActivity.class);
+        startActivity(intent);
     }
 }

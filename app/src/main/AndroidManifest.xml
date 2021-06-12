@@ -10,8 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab3">
         <activity
-            android:name=".ui.login.LoginActivity"
-            ></activity>
+            android:name=".AdminscreenActivity"
+            android:label="@string/title_activity_adminscreen"
+            android:theme="@style/Theme.Lab3.NoActionBar"></activity>
+        <activity
+            android:name=".adminScreen"
+            android:label="@string/title_activity_admin_screen"
+            android:theme="@style/Theme.Lab3.NoActionBar" />
+        <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +26,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ViewListContents" />
-
     </application>
 
 </manifest>
