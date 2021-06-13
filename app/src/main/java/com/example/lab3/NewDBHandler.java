@@ -93,7 +93,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         String query = "SELECT * FROM "+TABLE_COURSES+" WHERE "+COURSES_COLUMN_NAME+" = \""+courseName+"\"";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()){
-            String idStr = cursor.getString(0);
+            String idStr = cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_ID));
             db.delete(TABLE_COURSES, COURSES_COLUMN_ID+" = "+idStr, null);
             result = true;
         }
@@ -120,7 +120,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
     }
 
     public boolean addAccount(String username, String password, String accountType){
-        Boolean result = false;
+        boolean result = false;
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
