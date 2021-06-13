@@ -133,7 +133,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         return true;
     }
 
-    public Boolean findAccount(String username, String password){
+    public boolean findAccount(String username, String password){
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * FROM "+TABLE_USERS+" WHERE "+USERS_COLUMN_USERNAME+" = \""+username
