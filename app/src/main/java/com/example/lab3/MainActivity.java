@@ -1,9 +1,12 @@
 package com.example.lab3;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -103,9 +106,10 @@ public class MainActivity extends AppCompatActivity {
                 //Once
                 else {
                     if(!ValidUserName(inputName)){
-                        Toast.makeText(getApplicationContext(), "Username incorrect.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Username incorrect must be valid email.", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getApplicationContext(), "Password is too weak.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Password is too weak. ", Toast.LENGTH_SHORT).show();
+                        passAlert();
                     }
                 }
             }
@@ -171,5 +175,30 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("type", type);
 
         startActivity(intent);
+    }
+    String m_Text = "";
+    private void passAlert(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //builder.setTitle();
+
+        // Set up the input
+        builder.setMessage("A password must have 1 upper case and 1 lower case letter, 1 number and at least 6 characters long.");
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
