@@ -120,6 +120,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
     }
 
     public boolean addAccount(String username, String password, String accountType){
+        Boolean result = false;
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -128,9 +129,15 @@ public class NewDBHandler extends SQLiteOpenHelper {
         values.put(USERS_COLUMN_ACCOUNT_TYPE, accountType);
 
         // insert into table and close
-        db.insert(TABLE_USERS, null, values);
-        db.close();
-        return true;
+        try {
+            db.insert(TABLE_USERS, null, values);
+            result = true;
+        } catch (Exception e){
+            result = false;
+        } finally {
+            db.close();
+            return true;
+        }
     }
 
     public boolean findAccount(String username, String password){
