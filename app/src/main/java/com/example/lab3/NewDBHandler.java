@@ -26,7 +26,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS +"(" + USERS_COLUMN_ID + " INTEGER PRIMARY KEY," + USERS_COLUMN_USERNAME + " TEXT," + USERS_COLUMN_PASSWORD + " TEXT,"  + USERS_COLUMN_ACCOUNT_TYPE + "TEXT" + ")";
+        String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS +"(" + USERS_COLUMN_ID + " INTEGER PRIMARY KEY," + USERS_COLUMN_USERNAME + " TEXT," + USERS_COLUMN_PASSWORD + " TEXT,"  + USERS_COLUMN_ACCOUNT_TYPE + " TEXT" + ")";
         db.execSQL(CREATE_USERS_TABLE);
         String CREATE_COURSES_TABLE = "CREATE TABLE " + TABLE_COURSES +"(" + COURSES_COLUMN_ID + " INTEGER PRIMARY KEY, " + COURSES_COLUMN_CODE + " TEXT," + COURSES_COLUMN_NAME + " TEXT" + ")";
         db.execSQL(CREATE_COURSES_TABLE);
@@ -119,7 +119,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         return courses;
     }
 
-    public boolean addAccount(String username, String password, String accountType){
+    public void addAccount(String username, String password, String accountType){
         boolean result = false;
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -128,16 +128,13 @@ public class NewDBHandler extends SQLiteOpenHelper {
         values.put(USERS_COLUMN_PASSWORD, password);
         values.put(USERS_COLUMN_ACCOUNT_TYPE, accountType);
 
-        // insert into table and close
-        try {
-            db.insert(TABLE_USERS, null, values);
-            result = true;
-        } catch (Exception e){
-            result = false;
-        } finally {
-            db.close();
-            return true;
-        }
+
+        db.insert(TABLE_USERS, null, values);
+
+
+        db.close();
+
+
     }
 
     public boolean findAccount(String username, String password){
@@ -148,7 +145,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         // create an object and get the result
-        Boolean accountExists = false;
+        boolean accountExists = false;
         if (cursor.moveToFirst()){
             accountExists = true;
         }

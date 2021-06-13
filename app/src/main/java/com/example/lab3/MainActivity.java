@@ -90,8 +90,14 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "User Type cannot be admin.", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        dB.addAccount(inputName, inputPass, usertype);
-                        newUser(inputName, inputPass, usertype);
+                        if(!dB.findAccount(inputName,inputPass)) {
+                            dB.addAccount(inputName, inputPass, usertype);
+                            Toast.makeText(getApplicationContext(), "Welcome new user.", Toast.LENGTH_SHORT).show();
+                            openUser(inputName, inputPass, usertype);
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "User already Exists.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 //Once
@@ -101,10 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         Toast.makeText(getApplicationContext(), "Password is too weak.", Toast.LENGTH_SHORT).show();
                     }
-
                 }
-
-
             }
 
 
@@ -121,14 +124,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if(AdminValidation(inputName, inputPass) && usertype.equals(adminType)){
                     Toast.makeText(getApplicationContext(), "Hello Admin", Toast.LENGTH_SHORT).show();
-
                     openAdmin();
+                } else if(inputName.isEmpty() || inputPass.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Credentials are empty.", Toast.LENGTH_SHORT).show();
+                } else if(dB.findAccount(inputName, inputPass)){
+                    Toast.makeText(getApplicationContext(), "Welcome back "+inputName, Toast.LENGTH_SHORT).show();
+                    openUser(inputName, inputPass, usertype);
+                } else{
+                    Toast.makeText(getApplicationContext(), "User does not exist. ", Toast.LENGTH_SHORT).show();
                 }
-                else if(dB.findAccount(inputName, inputPass)){
-                    Toast.makeText(getApplicationContext(), "Exists.", Toast.LENGTH_SHORT).show();
-                }
-
-
             }
         });
 
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     }
-    private void newUser(String name, String pass, String type){
+    private void openUser(String name, String pass, String type){
         Intent intent = new Intent (this, welcome_screen.class);
         intent.putExtra("name", name);
 
