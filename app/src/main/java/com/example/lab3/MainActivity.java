@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    NewDBHandler dB;
     private final String studentType = "Student";
     private final String instructorType = "Instructor";
     private final String adminType = "Admin";
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         adminDetails = new adminCredentials();
 
-
+        dB = new NewDBHandler(this);
         userType = findViewById(R.id.userType);
 
         eName = findViewById(R.id.username);
@@ -99,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //Once
                 else {
-                    if (usertype.equals(studentType)) {
-                        //This is a student class.
-                    } else {
-                        //This is an instructor class.
-                    }
+
+                    dB.addAccount(inputName, inputPass, usertype);
+                    newUser(inputName, inputPass, usertype);
+
+
                 }
 
 
@@ -137,5 +139,13 @@ public class MainActivity extends AppCompatActivity {
         }else{
             return true;
         }
+    }
+    private void newUser(String name, String pass, String type){
+        Intent intent = new Intent (this, welcome_screen.class);
+        intent.putExtra("name", name);
+
+        intent.putExtra("type", type);
+
+        startActivity(intent);
     }
 }
