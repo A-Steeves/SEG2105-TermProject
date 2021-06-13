@@ -95,7 +95,6 @@ public class NewDBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             String idStr = cursor.getString(0);
             db.delete(TABLE_COURSES, COURSES_COLUMN_ID+" = "+idStr, null);
-            cursor.close();
             result = true;
         }
         cursor.close();
@@ -134,7 +133,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         return true;
     }
 
-    public Account findAccount(String username, String password){
+    public Boolean findAccount(String username, String password){
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * FROM "+TABLE_USERS+" WHERE "+USERS_COLUMN_USERNAME+" = \""+username
@@ -142,18 +141,13 @@ public class NewDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         // create an object and get the result
-        Account account = new Account();
+        Boolean accountExists = false;
         if (cursor.moveToFirst()){
-            account.setUsername(cursor.getString(cursor.getColumnIndex(USERS_COLUMN_USERNAME)));
-            account.setPassword(cursor.getString(cursor.getColumnIndex(USERS_COLUMN_PASSWORD)));
-            account.setAccountType(cursor.getString(cursor.getColumnIndex(USERS_COLUMN_ACCOUNT_TYPE)));
-            cursor.close();
-        } else {
-            account = null;
+            accountExists = true;
         }
         cursor.close();
         db.close();
-        return  account;
+        return  accountExists;
     }
 
     public boolean deleteAccount(String username){
@@ -165,7 +159,6 @@ public class NewDBHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             String idStr = cursor.getString(0);
             db.delete(TABLE_USERS, USERS_COLUMN_ID+" = "+idStr, null);
-            cursor.close();
             result = true;
         }
         cursor.close();
