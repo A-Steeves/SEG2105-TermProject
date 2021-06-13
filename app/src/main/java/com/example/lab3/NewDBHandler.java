@@ -94,8 +94,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()){
             String idStr = cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_ID));
-            db.delete(TABLE_COURSES, COURSES_COLUMN_ID+" = "+idStr, null);
-            result = true;
+            result = db.delete(TABLE_COURSES, COURSES_COLUMN_ID+" = "+idStr, null) > 0;
         }
         cursor.close();
         db.close();
