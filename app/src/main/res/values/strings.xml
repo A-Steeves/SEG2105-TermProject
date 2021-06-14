@@ -20,4 +20,10 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_adminscreen">MainActivity</string>
     <string name="title_activity_welcome_screen">welcome_screen</string>
+    <string name="tab_text_1">Home</string>
+    <string name="tab_text_2">Users</string>
+    <string name="tab_text_3">Courses</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

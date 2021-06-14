@@ -2,17 +2,11 @@ package com.example.lab3;
 
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
 import android.widget.TextView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.lab3.databinding.ActivityWelcomeScreenBinding;
 
@@ -35,7 +29,7 @@ public class welcome_screen extends AppCompatActivity {
 
         textName = (TextView)findViewById(R.id.textView2);
 
-        textType = (TextView)findViewById(R.id.textView4);
+        textType = (TextView)findViewById(R.id.cName);
 
         textName.setText("User Name: "+name);
 
