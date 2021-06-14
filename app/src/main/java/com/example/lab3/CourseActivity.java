@@ -48,9 +48,11 @@ public class CourseActivity extends AppCompatActivity {
 
     }
 
-//    public void onBackPressed(){
-//        Fragment fragment = new AdminFragment3();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
-//    }
+    public void onBackPressed(){
+        //Fragment fragment = new AdminFragment3();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+        setResult(RESULT_OK);
+        finish();
+    }
 
 }

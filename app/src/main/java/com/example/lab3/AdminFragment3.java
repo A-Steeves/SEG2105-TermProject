@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,6 +25,7 @@ import java.util.ArrayList;
 
 
 public class AdminFragment3 extends Fragment{
+
     private ArrayList<Course> courseList;
     ListView listView;
     Activity context;
@@ -33,7 +38,7 @@ public class AdminFragment3 extends Fragment{
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_admin3,container,false);
+        View v = inflater.inflate(R.layout.fragment_admin3, container, false);
 
         add = v.findViewById(R.id.Add);
         find = v.findViewById(R.id.Find2);
@@ -46,6 +51,19 @@ public class AdminFragment3 extends Fragment{
         courseListAdapter adapter = new courseListAdapter(getActivity(), R.layout.adapter_view_layout, courseList);
         listView.setAdapter(adapter);
         listView.setClickable(true);
+
+        ActivityResultLauncher<Intent> activityClosed = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        courseList.clear();
+                        courseList.addAll(myDb.allCourses());
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+        );
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?>adapter,View view, int position, long id) {
@@ -58,7 +76,8 @@ public class AdminFragment3 extends Fragment{
                 intent.putExtra("CourseCode", courseCode);
 
                 //based on item add info to intent
-                startActivity(intent);
+                //startActivity(intent);
+                activityClosed.launch(intent);
             }
         });
 

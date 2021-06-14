@@ -58,8 +58,8 @@ public class NewDBHandler extends SQLiteOpenHelper {
         // create an object and get the result
         Course course = new Course();
         if (cursor.moveToFirst()){
-            course.setCode(cursor.getString(1));
-            course.setName(cursor.getString(2));
+            course.setCode(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_CODE)));
+            course.setName(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_NAME)));
         } else {
             course = null;
         }
@@ -82,9 +82,6 @@ public class NewDBHandler extends SQLiteOpenHelper {
             values.put(COURSES_COLUMN_CODE, newCode);
             values.put(COURSES_COLUMN_NAME, newName);
             db.update(TABLE_COURSES, values, COURSES_COLUMN_ID+" = ?", new String[] {idStr});
-//            query = "UPDATE "+TABLE_COURSES+" SET "+COURSES_COLUMN_CODE+" = \""+newCode+"\", "
-//                    +COURSES_COLUMN_NAME+" = \""+newName+"\" WHERE "+COURSES_COLUMN_NAME+" = "+prevName;
-//            db.rawQuery(query, null);
         }
         cursor.close();
         db.close();
