@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 
 public class CourseActivity extends AppCompatActivity {
@@ -48,4 +49,10 @@ public class CourseActivity extends AppCompatActivity {
         });
 
     }
+
+    public void onBackPressed(){
+        Fragment fragment = new AdminFragment3();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+    }
+
 }
