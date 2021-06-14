@@ -42,17 +42,15 @@ public class CourseActivity extends AppCompatActivity {
                 TextView coCode = findViewById(R.id.textView7);
                 String newName = coName.getText().toString();
                 String newCode = coCode.getText().toString();
-                /*myDb.deleteCourse(name);
-                myDb.addCourse(newCode, newName);*/
-               // myDb.editCourse(name, newCode, newName);
+                myDb.editCourse(name, newCode, newName);
             }
         });
 
     }
 
-    public void onBackPressed(){
-        Fragment fragment = new AdminFragment3();
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
-    }
+//    public void onBackPressed(){
+//        Fragment fragment = new AdminFragment3();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
+//    }
 
 }

@@ -70,16 +70,21 @@ public class NewDBHandler extends SQLiteOpenHelper {
 
     public void editCourse(String prevName, String newCode, String newName){
         SQLiteDatabase db = this.getWritableDatabase();
+
         String query = "SELECT * FROM "+TABLE_COURSES+" WHERE "+COURSES_COLUMN_NAME+" = \""+prevName+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
         // edit course information
         String idStr;
         if (cursor.moveToFirst()){
-            idStr = cursor.getString(0);
-            query = "UPDATE "+TABLE_COURSES+" SET "+COURSES_COLUMN_CODE+" = \""+newCode+"\", "
-                    +COURSES_COLUMN_NAME+" = \""+newName+"\" WHERE ID = "+idStr;
-            db.rawQuery(query, null);
+            idStr = cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_ID));
+            ContentValues values = new ContentValues();
+            values.put(COURSES_COLUMN_CODE, newCode);
+            values.put(COURSES_COLUMN_NAME, newName);
+            db.update(TABLE_COURSES, values, COURSES_COLUMN_ID+" = ?", new String[] {idStr});
+//            query = "UPDATE "+TABLE_COURSES+" SET "+COURSES_COLUMN_CODE+" = \""+newCode+"\", "
+//                    +COURSES_COLUMN_NAME+" = \""+newName+"\" WHERE "+COURSES_COLUMN_NAME+" = "+prevName;
+//            db.rawQuery(query, null);
         }
         cursor.close();
         db.close();

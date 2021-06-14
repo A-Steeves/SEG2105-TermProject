@@ -69,13 +69,15 @@ public class AdminFragment3 extends Fragment{
                 String name = nameIn.getText().toString();
                 TextView codeIn = v.findViewById(R.id.CourseCode);
                 String code = codeIn.getText().toString();
-                myDb.addCourse(code, name);
-                courseList.clear();
-                courseList.addAll(myDb.allCourses());
-                adapter.notifyDataSetChanged();
-                nameIn.setText("Course Name");
-                codeIn.setText("Course Code");
-                System.out.println(name + "hi3");
+                if (!(name.equals("")&&code.equals(""))){
+                    myDb.addCourse(code, name);
+                    courseList.clear();
+                    courseList.addAll(myDb.allCourses());
+                    adapter.notifyDataSetChanged();
+                    nameIn.setText("");
+                    codeIn.setText("");
+                    System.out.println(name + "hi3");
+                }
             }
         });
 
