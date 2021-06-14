@@ -1,27 +1,20 @@
 package com.example.lab3;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.text.InputType;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.os.Bundle;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.regex.Pattern;
 
 
@@ -156,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void openAdmin(){
-        Intent intent = new Intent (this, AdminscreenActivity.class);
+        Intent intent = new Intent (this, MainActivity2.class);
         startActivity(intent);
     }
     private boolean validatePassword(String pass){
