@@ -145,7 +145,22 @@ public class NewDBHandler extends SQLiteOpenHelper {
                 +"\" AND "+USERS_COLUMN_PASSWORD+" = \""+password+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
-        // create an object and get the result
+        boolean accountExists = false;
+        if (cursor.moveToFirst()){
+            accountExists = true;
+        }
+        cursor.close();
+        db.close();
+        return  accountExists;
+    }
+
+    public boolean findAccountForAccountsPage(String username){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM "+TABLE_USERS+" WHERE "+USERS_COLUMN_USERNAME+" = \""+username
+                +"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
         boolean accountExists = false;
         if (cursor.moveToFirst()){
             accountExists = true;
