@@ -3,6 +3,7 @@ package com.example.lab3;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,10 @@ import androidx.fragment.app.Fragment;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 
-public class AdminFragment3 extends Fragment{
+public class AdminFragment3 extends Fragment {
 
     private ArrayList<Course> courseList;
     ListView listView;
@@ -48,7 +50,7 @@ public class AdminFragment3 extends Fragment{
         NewDBHandler myDb = new NewDBHandler(getActivity());
         courseList = myDb.allCourses();
 
-        courseListAdapter adapter = new courseListAdapter(getActivity(), R.layout.adapter_view_layout, courseList);
+        courseListAdapter adapter = new courseListAdapter(getActivity(), R.layout.course_adapter_view_layout, courseList);
         listView.setAdapter(adapter);
         listView.setClickable(true);
 
@@ -66,7 +68,7 @@ public class AdminFragment3 extends Fragment{
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?>adapter,View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
                 Course selected = courseList.get(position);
                 String courseName = selected.getName();
                 String courseCode = selected.getCode();
@@ -88,14 +90,15 @@ public class AdminFragment3 extends Fragment{
                 String name = nameIn.getText().toString();
                 TextView codeIn = v.findViewById(R.id.CourseCode);
                 String code = codeIn.getText().toString();
-                if (!(name.equals("")&&code.equals(""))){
+                Boolean courseCheck = validateCourseName();
+                Boolean nameCheck = validateCourseCode();
+                if (courseCheck!= false && nameCheck!=false) {
                     myDb.addCourse(code, name);
                     courseList.clear();
                     courseList.addAll(myDb.allCourses());
                     adapter.notifyDataSetChanged();
                     nameIn.setText("");
                     codeIn.setText("");
-                    System.out.println(name + "hi3");
                 }
             }
         });
@@ -106,10 +109,13 @@ public class AdminFragment3 extends Fragment{
                 TextView nameIn = v.findViewById(R.id.CourseName);
                 String name = nameIn.getText().toString();
                 Course found = myDb.findCourse(name);
-                if(found != null) {
-                    courseList.clear();
-                    courseList.add(found);
-                    adapter.notifyDataSetChanged();
+                Boolean courseCheck = validateCourseName();
+                if (courseCheck != false) {
+                    if (found != null) {
+                        courseList.clear();
+                        courseList.add(found);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
         });
@@ -123,9 +129,30 @@ public class AdminFragment3 extends Fragment{
             }
         });
 
-
         return v;
     }
 
+    private boolean validateCourseName() {
+        TextView nameIn = getActivity().findViewById(R.id.CourseName);
+        String name = nameIn.getText().toString();
+        if (name.isEmpty() == true) {
+            nameIn.setError("This field cannot be empty");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateCourseCode() {
+        TextView codeIn = getActivity().findViewById(R.id.CourseCode);
+        String code = codeIn.getText().toString();
+        if (code.isEmpty() == true) {
+            codeIn.setError("This field cannot be empty");
+            return false;
+        } else if (!Pattern.matches("\\b[A-Z]{3}\\d{3}\\b", code)) {
+            codeIn.setError("Please enter a valid course code");
+            return false;
+        }
+        return true;
+    }
 
 }

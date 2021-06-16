@@ -154,6 +154,42 @@ public class NewDBHandler extends SQLiteOpenHelper {
         db.close();
         return  accountExists;
     }
+    public Account findAccountUsername( String userName ){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM "+TABLE_USERS+" WHERE "+USERS_COLUMN_USERNAME+" = \""+ userName
+                +"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        Account thisAccount = new Account();
+
+        if ( cursor.moveToFirst() ){
+            thisAccount.setUsername( cursor.getString( cursor.getColumnIndex( USERS_COLUMN_USERNAME ) ) );
+            thisAccount.setUsername( cursor.getString( cursor.getColumnIndex( USERS_COLUMN_PASSWORD ) ) );
+            thisAccount.setUsername( cursor.getString( cursor.getColumnIndex( USERS_COLUMN_ACCOUNT_TYPE ) ) );
+        }
+        else {
+            thisAccount = null;
+        }
+        cursor.close();
+        db.close();
+        return thisAccount;
+    }
+//    public boolean findAccountForAccountsPage(String username){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//
+//        String query = "SELECT * FROM "+TABLE_USERS+" WHERE "+USERS_COLUMN_USERNAME+" = \""+username
+//                +"\"";
+//        Cursor cursor = db.rawQuery(query, null);
+//
+//        boolean accountExists = false;
+//        if (cursor.moveToFirst()){
+//            accountExists = true;
+//        }
+//        cursor.close();
+//        db.close();
+//        return  accountExists;
+//    }
 
     public boolean deleteAccount(String username){
         boolean result = false;
