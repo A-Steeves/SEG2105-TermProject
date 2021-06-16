@@ -41,14 +41,5 @@ public class AccountActivity extends AppCompatActivity {
 }
 
 
-//        saveChangesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View r) {
-//                TextView coName = findViewById(R.id.name);
-//                TextView coCode = findViewById(R.id.textView7);
-//                String newName = coName.getText().toString();
-//                String newCode = coCode.getText().toString();
-//                thisDb.editCourse( name, newCode, newName );
-//            }
-//        });
+
 

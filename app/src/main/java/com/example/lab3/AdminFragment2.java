@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Button;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -17,7 +17,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.widget.ArrayAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,17 +52,17 @@ public class AdminFragment2 extends Fragment {
 //        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, display);
 //        listView.setAdapter(listViewAdapter);
 
-//        ActivityResultLauncher<Intent> activityClosed = registerForActivityResult(
-//                new ActivityResultContracts.StartActivityForResult(),
-//                new ActivityResultCallback<ActivityResult>() {
-//                    @Override
-//                    public void onActivityResult(ActivityResult result) {
-//                        accountList.clear();
-//                        accountList.addAll(thisDb.allAccounts());
-//                        thisAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//        );
+       ActivityResultLauncher<Intent> activityClosed = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        accountList.clear();
+                       accountList.addAll(thisDb.allAccounts());
+                        thisAdapter.notifyDataSetChanged();
+                    }
+                }
+       );
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,21 +77,23 @@ public class AdminFragment2 extends Fragment {
                 intent.putExtra("accountType", accountType);
 
 //                based on item add info to intent
-                startActivity(intent);
-//                activityClosed.launch(intent);
+  //              startActivity(intent);
+                activityClosed.launch(intent);
             }
         });
 
         findBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View r) {
-                TextView userNameIn = v.findViewById( R.id.thisUsername );
+                TextView userNameIn = v.findViewById(R.id.thisUsername);
                 String userName = userNameIn.getText().toString();
-                Account found = thisDb.findAccountUsername( userName );
-                if ( found != null ) {
-                    accountList.clear();
-                    accountList.add( found );
-                    thisAdapter.notifyDataSetChanged();
+                Account found = thisDb.findAccountUsername(userName);
+                if (validateUserName() != false) {
+                    if (found != null) {
+                        accountList.clear();
+                        accountList.add(found);
+                        thisAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         });
@@ -106,6 +107,15 @@ public class AdminFragment2 extends Fragment {
             }
         });
         return v;
+    }
+    private boolean validateUserName() {
+        TextView nameIn = getActivity().findViewById(R.id.thisUsername);
+        String name = nameIn.getText().toString();
+        if (name.isEmpty() == true) {
+            nameIn.setError("This field cannot be empty");
+            return false;
+        }
+        return true;
     }
 
 }

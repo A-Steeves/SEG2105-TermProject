@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
             android:gravity="center"
             android:hint="Username"/>
@@ -48,10 +47,12 @@
                 android:id="@+id/Find"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
+                android:background="#FF6200EE"
+                android:textColor="@android:color/white"
                 android:text="FIND" />
 
 <!--            <Button-->
@@ -70,6 +71,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
+                android:background="#FF6200EE"
+                android:textColor="@android:color/white"
                 android:text="ALL" />
         </LinearLayout>
 

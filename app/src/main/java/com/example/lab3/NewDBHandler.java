@@ -172,16 +172,15 @@ public class NewDBHandler extends SQLiteOpenHelper {
     public Account findAccountUsername( String userName ){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM "+TABLE_USERS+" WHERE "+USERS_COLUMN_USERNAME+" = \""+ userName
-                +"\"";
+        String query = "SELECT * FROM "+TABLE_USERS+" WHERE "+USERS_COLUMN_USERNAME+" = \""+userName+"\"";
         Cursor cursor = db.rawQuery(query, null);
 
         Account thisAccount = new Account();
 
         if ( cursor.moveToFirst() ){
             thisAccount.setUsername( cursor.getString( cursor.getColumnIndex( USERS_COLUMN_USERNAME ) ) );
-            thisAccount.setUsername( cursor.getString( cursor.getColumnIndex( USERS_COLUMN_PASSWORD ) ) );
-            thisAccount.setUsername( cursor.getString( cursor.getColumnIndex( USERS_COLUMN_ACCOUNT_TYPE ) ) );
+            thisAccount.setPassword( cursor.getString( cursor.getColumnIndex( USERS_COLUMN_PASSWORD ) ) );
+            thisAccount.setAccountType( cursor.getString( cursor.getColumnIndex( USERS_COLUMN_ACCOUNT_TYPE ) ) );
         }
         else {
             thisAccount = null;
