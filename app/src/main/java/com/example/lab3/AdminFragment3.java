@@ -47,7 +47,7 @@ public class AdminFragment3 extends Fragment {
         all = v.findViewById(R.id.All2);
         listView = v.findViewById(R.id.listview);
         courseList = new ArrayList<Course>();
-        NewDBHandler myDb = new NewDBHandler(getActivity());
+        NewDBHandler myDb = new NewDBHandler( getActivity() );
         courseList = myDb.allCourses();
 
         courseListAdapter adapter = new courseListAdapter(getActivity(), R.layout.course_adapter_view_layout, courseList);

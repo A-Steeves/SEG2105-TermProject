@@ -11,19 +11,14 @@ public class AccountActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle saveInstanceState) {
 
-        Button deleteAccountBtn, saveChangesBtn;
-
-        deleteAccountBtn = findViewById(R.id.deleteAccount);
-//        saveChangesBtn = findViewById(R.id.saveChanges);
-
         super.onCreate(saveInstanceState);
         setContentView(R.layout.edit_account);
+        Button deleteAccountBtn = findViewById(R.id.deleteAccount);
         Intent thisIntent = this.getIntent();
         NewDBHandler thisDb = new NewDBHandler(AccountActivity.this);
 
         String userName = thisIntent.getStringExtra("userName");
         String accountType = thisIntent.getStringExtra("accountType");
-
         TextView thisUsername = findViewById(R.id.userName);
         TextView thisAccountType = findViewById(R.id.accountType);
 
@@ -33,7 +28,7 @@ public class AccountActivity extends AppCompatActivity {
         deleteAccountBtn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( accountType.equals( "Admin" ) ) {
+                if ( !accountType.equals( "Admin" ) ) {
                     thisDb.deleteAccount(userName);
                 }
             }
