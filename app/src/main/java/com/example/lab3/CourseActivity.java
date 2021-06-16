@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import java.util.regex.Pattern;
 
@@ -77,7 +76,7 @@ public class CourseActivity extends AppCompatActivity {
         if (code.isEmpty() == true) {
             codeIn.setError("This field cannot be empty");
             return false;
-        } else if (!Pattern.matches("\\b[A-Z]{3}\\d{3}\\b", code)) {
+        } else if (!Pattern.matches("\\b[A-Z]{3}\\d{4}\\b", code)) {
             codeIn.setError("Please enter a valid course code");
             return false;
         }
