@@ -3,7 +3,6 @@ package com.example.lab3;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,7 +147,7 @@ public class AdminFragment3 extends Fragment {
         if (code.isEmpty() == true) {
             codeIn.setError("This field cannot be empty");
             return false;
-        } else if (!Pattern.matches("\\b[A-Z]{3}\\d{3}\\b", code)) {
+        } else if (!Pattern.matches("\\b[A-Z]{3}\\d{4}\\b", code)) {
             codeIn.setError("Please enter a valid course code");
             return false;
         }
