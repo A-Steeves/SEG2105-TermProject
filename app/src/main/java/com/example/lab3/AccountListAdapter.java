@@ -22,8 +22,8 @@ public class AccountListAdapter extends ArrayAdapter<Account> {
 
     public View getView( int pos, View thisView, ViewGroup parentGroup ){
 
-        String userName = getItem( pos ).getUsername();
-        String accountType = getItem( pos ).getAccountType();
+        String userName = getItem(pos).getUsername();
+        String accountType = getItem(pos).getAccountType();
 
         LayoutInflater inflater = LayoutInflater.from( accountContext );
         thisView = inflater.inflate( accountResource, parentGroup, false );
