@@ -154,6 +154,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
 
     public void unassignInstructor(String courseName){
         assignInstructor(courseName, new String("NA"));
+        removeCourseInfo(courseName);
     }
 
     // used by the admin
