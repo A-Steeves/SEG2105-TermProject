@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 if(AdminValidation(inputName, inputPass) && usertype.equals(adminType)){
                     Toast.makeText(getApplicationContext(), "Hello Admin", Toast.LENGTH_SHORT).show();
                     openAdmin();
+
                 } else if(inputName.isEmpty() || inputPass.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Credentials are empty.", Toast.LENGTH_SHORT).show();
                 } else if(dB.findAccount(inputName, inputPass)){
