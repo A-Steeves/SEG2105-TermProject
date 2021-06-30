@@ -1,6 +1,5 @@
 package com.example.lab3;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,29 +24,25 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
-public class AdminFragment3 extends Fragment {
+public class InstructorFragment2 extends Fragment {
 
     private ArrayList<Course> courseList;
     ListView listView;
-    Activity context;
-    Button add;
     Button find;
     Button all;
-    Button delete;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_admin3, container, false);
+        View v = inflater.inflate(R.layout.fragment_instructor2, container, false);
 
-        add = v.findViewById(R.id.Add);
-        find = v.findViewById(R.id.Find2);
-        all = v.findViewById(R.id.All2);
-        listView = v.findViewById(R.id.listview);
+        find = v.findViewById(R.id.Find3);
+        all = v.findViewById(R.id.All3);
+        listView = v.findViewById(R.id.listview2);
         courseList = new ArrayList<Course>();
         NewDBHandler myDb = new NewDBHandler( getActivity() );
-        //courseList = myDb.allCourses();
+        courseList = myDb.allCourses();
 
         courseListAdapter adapter = new courseListAdapter(getActivity(), R.layout.course_adapter_view_layout, courseList);
         listView.setAdapter(adapter);
@@ -79,26 +74,6 @@ public class AdminFragment3 extends Fragment {
                 //based on item add info to intent
                 //startActivity(intent);
                 activityClosed.launch(intent);
-            }
-        });
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View r) {
-                TextView nameIn = v.findViewById(R.id.CourseName);
-                String name = nameIn.getText().toString();
-                TextView codeIn = v.findViewById(R.id.CourseCode);
-                String code = codeIn.getText().toString();
-                Boolean courseCheck = validateCourseName();
-                Boolean nameCheck = validateCourseCode();
-                if (courseCheck!= false && nameCheck!=false) {
-                    myDb.addCourse(code, name);
-                    courseList.clear();
-                    courseList.addAll(myDb.allCourses());
-                    adapter.notifyDataSetChanged();
-                    nameIn.setText("");
-                    codeIn.setText("");
-                }
             }
         });
 
