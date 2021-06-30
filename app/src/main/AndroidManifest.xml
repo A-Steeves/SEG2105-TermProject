@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab3">
+        <activity android:name=".IntructorCoursePage"></activity>
         <activity
             android:name=".MainActivity2"
             android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.Lab3.NoActionBar"></activity>
+            android:theme="@style/Theme.Lab3.NoActionBar" />
         <activity
             android:name=".welcome_screen"
             android:label="@string/title_activity_welcome_screen"
@@ -26,7 +27,7 @@
         </activity>
         <activity android:name=".ViewListContents" />
         <activity android:name=".CourseActivity" />
-        <activity android:name=".AccountActivity"/>
+        <activity android:name=".AccountActivity" />
     </application>
 
 </manifest>
