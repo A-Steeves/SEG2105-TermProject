@@ -164,12 +164,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void openUser(String name, String pass, String type){
-        Intent intent = new Intent (this, welcome_screen.class);
-        intent.putExtra("name", name);
+        Intent studentIntent = new Intent (this, welcome_screen.class);
+        Intent instructorIntent = new Intent (this, welcome_screen.class);
 
-        intent.putExtra("type", type);
+        if(type == instructorType) {
+            instructorIntent.putExtra("name", name);
 
-        startActivity(intent);
+            instructorIntent.putExtra("type", type);
+
+            startActivity(instructorIntent);
+        } else{
+            studentIntent.putExtra("name", name);
+
+            studentIntent.putExtra("type", type);
+
+            startActivity(studentIntent);
+        }
     }
     String m_Text = "";
     private void passAlert(){
