@@ -17,12 +17,12 @@ public class InstructorFragment1 extends Fragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_welcome_screen,container,false);
+        View v = inflater.inflate(R.layout.student_welcome  ,container,false);
         Bundle bundle = this.getArguments();
         String name = bundle.getString("name");
         String type = bundle.getString("type");
-        TextView textName = v.findViewById(R.id.textView2);
-        TextView textType = v.findViewById(R.id.cName);
+        TextView textName = v.findViewById(R.id.textView2A);
+        TextView textType = v.findViewById(R.id.cNameA);
         textName.setText("User Name: "+name);
         textType.setText("User Type: "+type);
         return v;

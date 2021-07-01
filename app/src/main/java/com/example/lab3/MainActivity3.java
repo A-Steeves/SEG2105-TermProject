@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity3 extends AppCompatActivity {
 
     private ActivityMain3Binding binding;
+    public static String Name = "hi";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity3 extends AppCompatActivity {
         /*Bundle args = new Bundle();
         args.putString("name", name);
         args.putString("type", type);*/
-
+        Name(name);
         SectionsPagerAdapter MyPagerAdapter = new MyPagerAdapter(this, getSupportFragmentManager());
 
 
@@ -42,6 +43,10 @@ public class MainActivity3 extends AppCompatActivity {
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
 
+
+    }
+    void Name(String name){
+        Name = name;
     }
 
 }

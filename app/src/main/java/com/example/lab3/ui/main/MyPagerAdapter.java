@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.lab3.InstructorFragment1;
 import com.example.lab3.InstructorFragment2;
+import com.example.lab3.MainActivity3;
 import com.example.lab3.R;
 
 public class MyPagerAdapter extends SectionsPagerAdapter{
@@ -29,9 +30,8 @@ public class MyPagerAdapter extends SectionsPagerAdapter{
             case 0:
 
                 Bundle args = new Bundle();
-                args.putString("name", "Ajay Mundi");
+                args.putString("name", MainActivity3.Name);
                 args.putString("type", "Instructor");
-
                 fragment =new InstructorFragment1();
                 fragment.setArguments(args);
                 break;
