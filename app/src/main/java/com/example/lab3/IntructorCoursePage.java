@@ -92,7 +92,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
 
             //Toast.makeText(getApplicationContext(),currentCourse.getDays(), Toast.LENGTH_SHORT).show();
 
-            //Toast.makeText(getApplicationContext(),currentCourse.getInstructor(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Here", Toast.LENGTH_SHORT).show();
 
             String day1, day2;
             String temp = currentCourse.getDays();
@@ -172,7 +172,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testPage(courseName);
+                testPage(instructorName, courseName);
 
 
                 text1.setVisibility(View.VISIBLE);
@@ -219,10 +219,11 @@ public class IntructorCoursePage extends AppCompatActivity  {
     }
 
 
-    public void testPage(String name){
+    public void testPage(String name, String courseName){
 
         Intent intent = new Intent(this, courseInfo.class);
-        intent.putExtra("name", name);
+        intent.putExtra("TeachName", name);
+        intent.putExtra("courseN", courseName);
         startActivity(intent);
 
     }

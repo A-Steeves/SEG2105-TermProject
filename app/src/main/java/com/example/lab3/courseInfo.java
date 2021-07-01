@@ -37,11 +37,12 @@ public class courseInfo extends AppCompatActivity {
 
         dayts="NA&NA";
 
-        String courseName = getIntent().getStringExtra("name");
+        String courseName = getIntent().getStringExtra("courseN");
+        String courseInstructor = getIntent().getStringExtra("TeachName");
 
         db = new NewDBHandler(this);
         currentCourse = db.findCourse(courseName);
-        String test = currentCourse.getInstructor();
+        //String test = currentCourse.getInstructor();
 
 
 
@@ -116,7 +117,7 @@ public class courseInfo extends AppCompatActivity {
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                testPage();
+                testPage(courseName, courseInstructor);
             }
         });
 
@@ -277,8 +278,12 @@ public class courseInfo extends AppCompatActivity {
 
     }
 
-    private void testPage(){
+    private void testPage(String courseName, String courseInstructor){
         Intent intent = new Intent (this, IntructorCoursePage.class);
+
+        intent.putExtra("instructorName", courseInstructor);
+        intent.putExtra("courseName", courseName);
+
         startActivity(intent);
     }
 
