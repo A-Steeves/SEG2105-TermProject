@@ -1,19 +1,13 @@
 package com.example.lab3;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.Serializable;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class IntructorCoursePage extends AppCompatActivity  {
@@ -62,14 +56,8 @@ public class IntructorCoursePage extends AppCompatActivity  {
 
 
         db = new NewDBHandler(this);
-        //Boolean test1 = db.addCourse(courseID, courseName);
+        Boolean test1 = db.addCourse(courseID, courseName);
         currentCourse = db.findCourse(courseName);
-
-
-
-
-
-
         cName = (TextView)findViewById(R.id.courseName);
         cID = (TextView)findViewById(R.id.courseID);
         cInstructor = (TextView)findViewById(R.id.courseInstructor);
