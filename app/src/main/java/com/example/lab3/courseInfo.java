@@ -4,28 +4,47 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.io.Serializable;
 
 public class courseInfo extends AppCompatActivity {
 
 
     Spinner startFirst, timePeriodA1, startSecond, endFirst, endSecond,timePeriodA2, weekday;
     Spinner startFirst2, startSecond2,timePeriodB1, endFirst2, endSecond2, timePeriodB2, weekday2;
-    NewDBHandler db;
+
+    String firstCourseTime, secondCourseTime, description;
     Course currentCourse;
     Button btnsave, btnExit;
+    NewDBHandler db;
+
+    String desc2, dayts;
+    int cap2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_info);
 
+        dayts="NA&NA";
+
+        String courseName = getIntent().getStringExtra("name");
+
         db = new NewDBHandler(this);
-        //currentCourse = db.findCourse("SEG");
+        currentCourse = db.findCourse(courseName);
+        String test = currentCourse.getInstructor();
+
+
+
 
         String[] first = new String[]{"1","2","3","4","5","6","7","8","9","10","11","12"};
         String[] second = new String[]{"00","15","30","45"};
@@ -88,6 +107,12 @@ public class courseInfo extends AppCompatActivity {
         btnsave = (Button)findViewById(R.id.btnSave1);
         btnExit = (Button)findViewById(R.id.btnExit);
 
+
+        //Student Capacity
+        EditText desc = (EditText)findViewById(R.id.editTextTextPersonName3);
+        EditText cap = (EditText)findViewById(R.id.editTextNumber);
+
+
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,12 +120,22 @@ public class courseInfo extends AppCompatActivity {
             }
         });
 
+
+
+
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
+
+                String day1 = "NA";
+                String day2 = "NA";
+
+
                 if(weekday.getSelectedItem().toString() != "None"){
-
-
 
                     String firstPeriod = timePeriodA1.getSelectedItem().toString();
                     String secondPeriod = timePeriodA2.getSelectedItem().toString();
@@ -137,8 +172,8 @@ public class courseInfo extends AppCompatActivity {
                             if(!(secondPeriod == "PM" && third >= 11 && fourth > 0)){
 
                                 if(!(firstPeriod == secondPeriod && first>=third && fourth<=second)) {
-                                    String firstDate = "" + weekday.getSelectedItem().toString() + ": " + startFirst.getSelectedItem().toString() +":"+ startSecond.getSelectedItem().toString() + " " + timePeriodA1.getSelectedItem().toString() + "-" + endFirst.getSelectedItem().toString() + ":"+endSecond.getSelectedItem().toString() + " " + timePeriodA2.getSelectedItem().toString() + "";
-                                    Toast.makeText(getApplicationContext(), firstDate, Toast.LENGTH_SHORT).show();
+                                    firstCourseTime = "" + weekday.getSelectedItem().toString() + ": " + startFirst.getSelectedItem().toString() +":"+ startSecond.getSelectedItem().toString() + " " + timePeriodA1.getSelectedItem().toString() + "-" + endFirst.getSelectedItem().toString() + ":"+endSecond.getSelectedItem().toString() + " " + timePeriodA2.getSelectedItem().toString() + "";
+                                    day1 = firstCourseTime;
                                 }else{
                                     Toast.makeText(getApplicationContext(), "Start time cannot be before end time.", Toast.LENGTH_SHORT).show();
                                 }
@@ -197,9 +232,9 @@ public class courseInfo extends AppCompatActivity {
                             if(!(secondPeriod == "PM" && third >= 11 && fourth > 0)){
 
                                 if(!(firstPeriod == secondPeriod && first>=third && fourth<=second)) {
-                                    String secondDate = "" + weekday2.getSelectedItem().toString() + ": " + startFirst2.getSelectedItem().toString() + ":"+ startSecond2.getSelectedItem().toString() + " " + timePeriodB1.getSelectedItem().toString() + "-" + endFirst2.getSelectedItem().toString() + ":" +endSecond2.getSelectedItem().toString() + " " + timePeriodB2.getSelectedItem().toString() + "";
+                                    secondCourseTime = "" + weekday2.getSelectedItem().toString() + ": " + startFirst2.getSelectedItem().toString() + ":"+ startSecond2.getSelectedItem().toString() + " " + timePeriodB1.getSelectedItem().toString() + "-" + endFirst2.getSelectedItem().toString() + ":" +endSecond2.getSelectedItem().toString() + " " + timePeriodB2.getSelectedItem().toString() + "";
+                                    day2 = secondCourseTime;
 
-                                    Toast.makeText(getApplicationContext(), secondDate, Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(getApplicationContext(), "Start time cannot be before end time.", Toast.LENGTH_SHORT).show();
                                 }
@@ -214,6 +249,23 @@ public class courseInfo extends AppCompatActivity {
                     }else{
                         Toast.makeText(getApplicationContext(), "Start time cannot be in PM if end time is in AM.", Toast.LENGTH_SHORT).show();
                     }
+                }
+
+
+
+                //InfoSet
+                dayts = ""+day1+"&"+day2+"";
+
+                desc2 = desc.getText().toString();
+
+
+                String tempCapacity = cap.getText().toString();
+
+                if(!tempCapacity.isEmpty()){
+                    cap2 = Integer.parseInt(cap.getText().toString());
+                    db.addCourseInfo(courseName, dayts, "Couple", desc2, cap2);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Please enter a valid number of students.", Toast.LENGTH_SHORT).show();
                 }
 
             }
