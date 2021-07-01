@@ -2,6 +2,7 @@ package com.example.lab3;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -25,7 +26,11 @@ public class MainActivity3 extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         String name = intent.getStringExtra("name");
+
+
         String type = intent.getStringExtra("type");
+
+
         Intent intente = new Intent(this, MyPagerAdapter.class);
         intente.putExtra("name", name);
         intente.putExtra("type", type);

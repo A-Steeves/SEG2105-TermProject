@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -49,6 +50,8 @@ public class InstructorFragment2 extends Fragment {
         NewDBHandler myDb = new NewDBHandler( getActivity() );
         courseList = myDb.allCourses();
 
+
+
         courseListAdapter adapter = new courseListAdapter(getActivity(), R.layout.course_adapter_view_layout, courseList);
         listView.setAdapter(adapter);
         listView.setClickable(true);
@@ -71,12 +74,16 @@ public class InstructorFragment2 extends Fragment {
                 Course selected = courseList.get(position);
                 String courseName = selected.getName();
                 String courseCode = selected.getCode();
-                String courseInstructor = selected.getInstructor();;
+                String courseInstructor = selected.getInstructor();
+
+                String tempInstructor = getActivity().getIntent().getStringExtra("name");
+
+
 
                 Intent intent = new Intent(getActivity(), IntructorCoursePage.class);
                 intent.putExtra("courseName", courseName);
                 intent.putExtra("courseID", courseCode);
-                intent.putExtra("instructorName", courseInstructor);
+                intent.putExtra("instructorName", tempInstructor);
 
 
                 //based on item add info to intent

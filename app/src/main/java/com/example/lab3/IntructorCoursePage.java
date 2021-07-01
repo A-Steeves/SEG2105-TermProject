@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
     String courseDays, courseDescription;
     int courseCapacity;
 
+    String courseName, courseID, instructorName;
 
     private TextView cName, cID, cInstructor;
     @Override
@@ -29,34 +31,16 @@ public class IntructorCoursePage extends AppCompatActivity  {
         setContentView(R.layout.activity_intructor_course_page);
 
 
-        /*
-        For Ajay
-
-        intent.putExtra("courseName", courseName);
-
-        intent.putExtra("courseID", courseID);
-
-        intent.putExtra("instructorName", instructorName);
-
-
-
         //Not this part
-        String courseName = getIntent().getStringExtra("courseName");
+        courseName = getIntent().getStringExtra("courseName");
+        courseID = getIntent().getStringExtra("courseID");
+        instructorName = getIntent().getStringExtra("instructorName");
 
-        String courseID = getIntent().getStringExtra("courseID");
-
-        String instructorName = getIntent().getStringExtra("instructorName");
-        */
-
-
-        String courseName = "Software";
-        String courseID = "SEG2136";
-        String instructorName = "Samantha Sam";
 
 
 
         db = new NewDBHandler(this);
-        Boolean test1 = db.addCourse(courseID, courseName);
+
         currentCourse = db.findCourse(courseName);
         cName = (TextView)findViewById(R.id.courseName);
         cID = (TextView)findViewById(R.id.courseID);
@@ -97,9 +81,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
         btnEdit.setVisibility(View.GONE);
         btnUnassign.setVisibility(View.GONE);
 
-
-
-
+        btnAssign.setEnabled(true);
 
 
 
@@ -108,7 +90,10 @@ public class IntructorCoursePage extends AppCompatActivity  {
             btnEdit.setVisibility(View.VISIBLE);
             btnUnassign.setVisibility(View.VISIBLE);
 
+            //Toast.makeText(getApplicationContext(),currentCourse.getDays(), Toast.LENGTH_SHORT).show();
+
             //Toast.makeText(getApplicationContext(),currentCourse.getInstructor(), Toast.LENGTH_SHORT).show();
+
             String day1, day2;
             String temp = currentCourse.getDays();
             if (temp.contains("&")){
@@ -119,9 +104,6 @@ public class IntructorCoursePage extends AppCompatActivity  {
                 day1 = "NA";
                 day2 = "NA";
             }
-
-
-
             cInstructor.setText(instructorName);
             text1.setText(day1);
             courseTime.setText(day2);
@@ -137,22 +119,39 @@ public class IntructorCoursePage extends AppCompatActivity  {
 
         }
 
+        if (!currentCourse.getInstructor().equals(instructorName)  && !currentCourse.getInstructor().equals("NA")) {
+            btnAssign.setEnabled(false);
+            btnEdit.setEnabled(false);
+            btnUnassign.setEnabled(false);
 
-        /*
-        else if (currentCourse.getInstructor()!= instructorName && currentCourse.getInstructor() != "NA" ) {
-                btnAssign.setEnabled(false);
-                btnEdit.setEnabled(false);
-                btnUnassign.setEnabled(false);
+            Toast.makeText(getApplicationContext(),"Here2", Toast.LENGTH_SHORT).show();
 
-                cInstructor.setText(currentCourse.getInstructor());
+            cInstructor.setText(currentCourse.getInstructor());
 
-                text1.setText(currentCourse.getDays());
-                courseTime.setText(currentCourse.getHours());
-                text3.setText(currentCourse.getDescription());
-                text4.setText(currentCourse.getStudent_capacity());
-
+            String day1, day2;
+            String temp = currentCourse.getDays();
+            if (temp.contains("&")){
+                String[] parts = temp.split("&");
+                day1 = parts[0];
+                day2 = parts[1];
+            }else{
+                day1 = "NA";
+                day2 = "NA";
             }
-        */
+
+            text1.setText(day1);
+            courseTime.setText(day2);
+            text3.setText(currentCourse.getDescription());
+            String beef = String.valueOf(currentCourse.getStudent_capacity());
+            text4.setText(beef+" Students");
+
+            text1.setVisibility(View.VISIBLE);
+            courseTime.setVisibility(View.VISIBLE);
+            text3.setVisibility(View.VISIBLE);
+            text4.setVisibility(View.VISIBLE);
+
+        }
+
 
 
         btnAssign.setOnClickListener(new View.OnClickListener() {

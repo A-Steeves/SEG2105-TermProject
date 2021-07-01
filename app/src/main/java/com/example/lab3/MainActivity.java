@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        testPage();
+        //testPage();
         setContentView(R.layout.activity_login);
 
         adminDetails = new adminCredentials();
@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void openUser(String name, String pass, String type){
-        Intent intent = new Intent (this, MainActivity3.class);
-        intent.putExtra("name", name);
+        //Intent intent = new Intent (this, MainActivity3.class);
+        //intent.putExtra("name", name);
         Intent studentIntent = new Intent (this, welcome_screen.class);
         Intent instructorIntent = new Intent (this, MainActivity3.class);
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         //startActivity(intent);
             instructorIntent.putExtra("type", type);
 
-            startActivity(intent);
+            startActivity(instructorIntent);
         } else{
             studentIntent.putExtra("name", name);
 
