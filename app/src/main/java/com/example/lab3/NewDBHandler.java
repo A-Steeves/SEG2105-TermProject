@@ -52,6 +52,11 @@ public class NewDBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COURSES_COLUMN_CODE, courseCode);
         values.put(COURSES_COLUMN_NAME, courseName);
+        values.put(COURSES_COLUMN_INSTRUCTOR, "NA");
+        values.put(COURSES_COLUMN_DAYS, "NA");
+        values.put(COURSES_COLUMN_HOURS, "NA");
+        values.put(COURSES_COLUMN_DESCRIPTION, "NA");
+        values.put(COURSES_COLUMN_STUDENT_CAPACITY, 0);
 
         db.insert(TABLE_COURSES, null, values);
         db.close();
