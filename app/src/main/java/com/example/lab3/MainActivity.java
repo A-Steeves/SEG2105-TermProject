@@ -42,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     ".{6,}"+          //6 characters
                     "$");
 
-
-
-
-
     adminCredentials adminDetails;
 
     @Override
@@ -135,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private boolean AdminValidation(String name, String password){
@@ -164,15 +159,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void openUser(String name, String pass, String type){
+        Intent intent = new Intent (this, MainActivity3.class);
+        intent.putExtra("name", name);
         Intent studentIntent = new Intent (this, welcome_screen.class);
-        Intent instructorIntent = new Intent (this, welcome_screen.class);
+        Intent instructorIntent = new Intent (this, MainActivity3.class);
 
         if(type == instructorType) {
             instructorIntent.putExtra("name", name);
 
+        //startActivity(intent);
             instructorIntent.putExtra("type", type);
 
-            startActivity(instructorIntent);
+            startActivity(intent);
         } else{
             studentIntent.putExtra("name", name);
 
@@ -201,11 +199,11 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+
     private void testPage(){
         Intent intent = new Intent(this, IntructorCoursePage.class);
         startActivity(intent);
 
     }
-
 
 }

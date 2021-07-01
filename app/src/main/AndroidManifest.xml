@@ -13,6 +13,10 @@
         <activity android:name=".instructorPage" />
         <activity android:name=".IntructorCoursePage" />
         <activity
+            android:name=".MainActivity3"
+            android:label="@string/title_activity_main3"
+            android:theme="@style/Theme.Lab3.NoActionBar"></activity>
+        <activity
             android:name=".MainActivity2"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.Lab3.NoActionBar" />
