@@ -36,6 +36,7 @@
             android:layout_height="74dp"
             android:orientation="horizontal">
 
+
             <Button
                 android:id="@+id/Find3"
                 android:layout_width="100dp"
@@ -63,7 +64,7 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/listview2"
+            android:id="@+id/listview3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

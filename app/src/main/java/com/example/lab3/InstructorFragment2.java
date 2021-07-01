@@ -35,11 +35,11 @@ public class InstructorFragment2 extends Fragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_instructor2, container, false);
+        View v = inflater.inflate(R.layout.frag_instructor2, container, false);
 
         find = v.findViewById(R.id.Find3);
         all = v.findViewById(R.id.All3);
-        listView = v.findViewById(R.id.listview2);
+        listView = v.findViewById(R.id.listview3);
         courseList = new ArrayList<Course>();
         NewDBHandler myDb = new NewDBHandler( getActivity() );
         courseList = myDb.allCourses();
@@ -67,7 +67,7 @@ public class InstructorFragment2 extends Fragment {
                 String courseName = selected.getName();
                 String courseCode = selected.getCode();
 
-                Intent intent = new Intent(getActivity(), CourseActivity.class);
+                Intent intent = new Intent(getActivity(), IntructorCoursePage.class);
                 intent.putExtra("CourseName", courseName);
                 intent.putExtra("CourseCode", courseCode);
 
@@ -80,7 +80,7 @@ public class InstructorFragment2 extends Fragment {
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View r) {
-                TextView nameIn = v.findViewById(R.id.CourseName);
+                TextView nameIn = v.findViewById(R.id.CourseName1);
                 String name = nameIn.getText().toString();
                 Course found = myDb.findCourse(name);
                 Boolean courseCheck = validateCourseName();

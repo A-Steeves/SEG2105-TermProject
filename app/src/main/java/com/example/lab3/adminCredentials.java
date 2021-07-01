@@ -2,8 +2,8 @@ package com.example.lab3;
 
 public class adminCredentials {
 
-    private String AdminUsername = "1";
-    private String AdminPassword = "1";
+    private String AdminUsername = "admin";
+    private String AdminPassword = "admin123";
 
     //Class that stores admin pass and username.
     public adminCredentials(){

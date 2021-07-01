@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab3">
+        <activity android:name=".instructorPage"></activity>
+        <activity android:name=".IntructorCoursePage" />
         <activity
             android:name=".MainActivity3"
             android:label="@string/title_activity_main3"
