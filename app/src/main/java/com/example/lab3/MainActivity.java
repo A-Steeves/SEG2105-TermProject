@@ -159,24 +159,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void openUser(String name, String pass, String type){
-<<<<<<< HEAD
         Intent intent = new Intent (this, MainActivity3.class);
         intent.putExtra("name", name);
-=======
         Intent studentIntent = new Intent (this, welcome_screen.class);
-        Intent instructorIntent = new Intent (this, welcome_screen.class);
->>>>>>> 0b9971605d13f3493c65f63626f5e1dd1489e2f8
+        Intent instructorIntent = new Intent (this, MainActivity3.class);
 
         if(type == instructorType) {
             instructorIntent.putExtra("name", name);
 
-<<<<<<< HEAD
-
-        startActivity(intent);
-=======
+        //startActivity(intent);
             instructorIntent.putExtra("type", type);
 
-            startActivity(instructorIntent);
+            startActivity(intent);
         } else{
             studentIntent.putExtra("name", name);
 
@@ -184,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
             startActivity(studentIntent);
         }
->>>>>>> 0b9971605d13f3493c65f63626f5e1dd1489e2f8
     }
     String m_Text = "";
     private void passAlert(){
