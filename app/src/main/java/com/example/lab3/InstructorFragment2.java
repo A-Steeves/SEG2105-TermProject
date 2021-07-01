@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -29,8 +30,7 @@ public class InstructorFragment2 extends Fragment {
 
     private ArrayList<Course> courseList;
     ListView listView;
-    Button find;
-    Button all;
+    FloatingActionButton all;
     ImageButton searchCourse;
     ImageButton searchCode;
 
@@ -43,7 +43,7 @@ public class InstructorFragment2 extends Fragment {
         //find = v.findViewById(R.id.Find3);
         searchCourse = v.findViewById(R.id.imageButton);
         searchCode = v.findViewById(R.id.imageButton2);
-        all = v.findViewById(R.id.All3);
+        all = v.findViewById(R.id.floatingActionButton);
         listView = v.findViewById(R.id.listview3);
         courseList = new ArrayList<Course>();
         NewDBHandler myDb = new NewDBHandler( getActivity() );

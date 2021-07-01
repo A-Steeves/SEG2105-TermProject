@@ -22,6 +22,8 @@
                 android:layout_width="62dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
+                android:backgroundTint="@color/purple_500"
+                app:tint="@color/white"
                 android:layout_marginTop="30dp"
                 app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
@@ -46,6 +48,8 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="62dp"
                 android:layout_height="40dp"
+                android:backgroundTint="@color/purple_500"
+                app:tint="@color/white"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="0dp"
                 app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
@@ -60,33 +64,30 @@
                 android:hint="Course Code" />
         </LinearLayout>
 
-        <LinearLayout
+
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="74dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
+            <ListView
+                android:id="@+id/listview3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
 
-            <Button
-                android:id="@+id/All3"
-                android:layout_width="50dp"
-                android:layout_height="39dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
                 android:layout_marginRight="30dp"
-                android:layout_weight="1"
-                android:background="#FF6200EE"
-                android:text="SHOW ALL"
-                android:textColor="@android:color/white" />
-
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/listview3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-
-        </ListView>
-
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="@color/purple_500"
+                android:tint="@color/white"
+                app:fabCustomSize="60dp"
+                app:fabSize="auto"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_list" />
+        </FrameLayout>
     </LinearLayout>
 </RelativeLayout>
