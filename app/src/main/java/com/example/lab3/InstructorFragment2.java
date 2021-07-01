@@ -66,10 +66,13 @@ public class InstructorFragment2 extends Fragment {
                 Course selected = courseList.get(position);
                 String courseName = selected.getName();
                 String courseCode = selected.getCode();
+                String courseInstructor = selected.getInstructor();;
 
                 Intent intent = new Intent(getActivity(), IntructorCoursePage.class);
-                intent.putExtra("CourseName", courseName);
-                intent.putExtra("CourseCode", courseCode);
+                intent.putExtra("courseName", courseName);
+                intent.putExtra("courseID", courseCode);
+                intent.putExtra("instructorName", courseInstructor);
+
 
                 //based on item add info to intent
                 //startActivity(intent);
@@ -80,8 +83,8 @@ public class InstructorFragment2 extends Fragment {
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View r) {
-                TextView nameIn = v.findViewById(R.id.CourseName1);
-                String name = nameIn.getText().toString();
+                TextView nameeIn = v.findViewById(R.id.CourseName1);
+                String name = nameeIn.getText().toString();
                 Course found = myDb.findCourse(name);
                 Boolean courseCheck = validateCourseName();
                 if (courseCheck != false) {
@@ -107,17 +110,17 @@ public class InstructorFragment2 extends Fragment {
     }
 
     private boolean validateCourseName() {
-        TextView nameIn = getActivity().findViewById(R.id.CourseName);
-        String name = nameIn.getText().toString();
+        TextView nameeIn = getActivity().findViewById(R.id.CourseName1);
+        String name = nameeIn.getText().toString();
         if (name.isEmpty() == true) {
-            nameIn.setError("This field cannot be empty");
+            nameeIn.setError("This field cannot be empty");
             return false;
         }
         return true;
     }
 
     private boolean validateCourseCode() {
-        TextView codeIn = getActivity().findViewById(R.id.CourseCode);
+        TextView codeIn = getActivity().findViewById(R.id.CourseCode1);
         String code = codeIn.getText().toString();
         if (code.isEmpty() == true) {
             codeIn.setError("This field cannot be empty");

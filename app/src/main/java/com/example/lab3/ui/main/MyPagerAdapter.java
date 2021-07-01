@@ -29,8 +29,8 @@ public class MyPagerAdapter extends SectionsPagerAdapter{
             case 0:
 
                 Bundle args = new Bundle();
-                args.putString("name", "hi");
-                args.putString("type", "hi");
+                args.putString("name", "Ajay Mundi");
+                args.putString("type", "Instructor");
 
                 fragment =new InstructorFragment1();
                 fragment.setArguments(args);
