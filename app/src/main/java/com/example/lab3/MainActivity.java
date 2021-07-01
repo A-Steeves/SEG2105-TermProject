@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 if(AdminValidation(inputName, inputPass) && usertype.equals(adminType)){
                     Toast.makeText(getApplicationContext(), "Hello Admin", Toast.LENGTH_SHORT).show();
                     openAdmin();
+
                 } else if(inputName.isEmpty() || inputPass.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Credentials are empty.", Toast.LENGTH_SHORT).show();
                 } else if(dB.findAccount(inputName, inputPass)){
@@ -158,13 +159,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void openUser(String name, String pass, String type){
+<<<<<<< HEAD
         Intent intent = new Intent (this, MainActivity3.class);
         intent.putExtra("name", name);
+=======
+        Intent studentIntent = new Intent (this, welcome_screen.class);
+        Intent instructorIntent = new Intent (this, welcome_screen.class);
+>>>>>>> 0b9971605d13f3493c65f63626f5e1dd1489e2f8
 
-        intent.putExtra("type", type);
+        if(type == instructorType) {
+            instructorIntent.putExtra("name", name);
 
+<<<<<<< HEAD
 
         startActivity(intent);
+=======
+            instructorIntent.putExtra("type", type);
+
+            startActivity(instructorIntent);
+        } else{
+            studentIntent.putExtra("name", name);
+
+            studentIntent.putExtra("type", type);
+
+            startActivity(studentIntent);
+        }
+>>>>>>> 0b9971605d13f3493c65f63626f5e1dd1489e2f8
     }
     String m_Text = "";
     private void passAlert(){
