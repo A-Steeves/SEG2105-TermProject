@@ -2,6 +2,7 @@ package com.example.lab3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,8 +17,8 @@ import android.widget.Toast;
 
 public class IntructorCoursePage extends AppCompatActivity {
 
-    Button btnAssign, btnEdit, btnUnassign, btnSave;
-    EditText text1, text3, text4;
+    Button btnAssign, btnEdit, btnUnassign;
+    EditText text1, text3, courseTime, text4;
 
     NewDBHandler db;
     Course currentCourse;
@@ -32,11 +33,7 @@ public class IntructorCoursePage extends AppCompatActivity {
         //currentCourse = db.findCourse(courseName);
 
 
-        //CourseTIME
-        Spinner courseTime = (Spinner)findViewById(R.id.courseTime);
-        String[] types = new String[]{"8:30 AM", "10:00 AM", "11:30 AM", "1:00 PM", "2:30 PM", "4:00 PM", "5:30 PM", "7:00 PM", "8:30 PM"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, types);
-        courseTime.setAdapter(adapter);
+
 
         /*
         For Ajay
@@ -77,12 +74,13 @@ public class IntructorCoursePage extends AppCompatActivity {
         btnAssign = (Button)findViewById(R.id.btnAssign);
         btnEdit = (Button)findViewById(R.id.btnEdit);
         btnUnassign = (Button)findViewById(R.id.btnUnassign);
-        btnSave = (Button)findViewById(R.id.btnSave);
+
 
 
 
 
         text1 = (EditText)findViewById(R.id.textName);
+        courseTime = (EditText)findViewById(R.id.courseTime);
         text3 = (EditText)findViewById(R.id.text3);
         text4 = (EditText)findViewById(R.id.text4);
 
@@ -100,7 +98,7 @@ public class IntructorCoursePage extends AppCompatActivity {
         //Done
 
 
-        btnSave.setVisibility(View.GONE);
+
         btnEdit.setVisibility(View.GONE);
         btnUnassign.setVisibility(View.GONE);
 
@@ -114,7 +112,7 @@ public class IntructorCoursePage extends AppCompatActivity {
             text3.setText(currentCourse.getDescription());
             text4.setText(currentCourse.getStudent_Capacity());
 
-            btnSave.setVisibility(View.VISIBLE);
+
             btnEdit.setVisibility(View.VISIBLE);
             btnUnassign.setVisibility(View.VISIBLE);
 
@@ -152,15 +150,11 @@ public class IntructorCoursePage extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnEdit.setVisibility(View.GONE);
-                btnUnassign.setVisibility(View.GONE);
-                btnSave.setVisibility(View.VISIBLE);
+                testPage();
 
 
-                text1.setEnabled(true);
-                courseTime.setEnabled(true);
-                text3.setEnabled(true);
-                text4.setEnabled(true);
+
+
 
                 text1.setVisibility(View.VISIBLE);
                 courseTime.setVisibility(View.VISIBLE);
@@ -172,28 +166,7 @@ public class IntructorCoursePage extends AppCompatActivity {
             }
         });
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnEdit.setVisibility(View.VISIBLE);
-                btnUnassign.setVisibility(View.VISIBLE);
 
-                btnSave.setVisibility(View.GONE);
-
-                text1.setEnabled(false);
-                courseTime.setEnabled(false);
-                text3.setEnabled(false);
-                text4.setEnabled(false);
-
-
-
-                //currentCourse.setDays(findViewById(R.id.textName));
-                //currentCourse.setHours((EditText)findViewById(R.id.courseTime));
-                //currentCourse.setDescription(findViewById(R.id.text3));
-                //currentCourse.setStudentCapacity(findViewById(R.id.text4));
-
-            }
-        });
 
         btnUnassign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,6 +188,10 @@ public class IntructorCoursePage extends AppCompatActivity {
 
 
 
+    }
+    private void testPage(){
+        Intent intent = new Intent (this, courseInfo.class);
+        startActivity(intent);
     }
 
 

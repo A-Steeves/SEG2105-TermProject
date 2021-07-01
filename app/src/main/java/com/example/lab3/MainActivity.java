@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //testPage();
+        testPage();
         setContentView(R.layout.activity_login);
 
         adminDetails = new adminCredentials();
