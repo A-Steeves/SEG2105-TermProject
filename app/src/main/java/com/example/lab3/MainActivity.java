@@ -42,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     ".{6,}"+          //6 characters
                     "$");
 
-
-
-
-
     adminCredentials adminDetails;
 
     @Override
@@ -123,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 if(AdminValidation(inputName, inputPass) && usertype.equals(adminType)){
                     Toast.makeText(getApplicationContext(), "Hello Admin", Toast.LENGTH_SHORT).show();
                     openAdmin();
+
                 } else if(inputName.isEmpty() || inputPass.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Credentials are empty.", Toast.LENGTH_SHORT).show();
                 } else if(dB.findAccount(inputName, inputPass)){
@@ -133,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
     }
 
@@ -163,12 +159,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void openUser(String name, String pass, String type){
-        Intent intent = new Intent (this, welcome_screen.class);
-        intent.putExtra("name", name);
+        //Intent intent = new Intent (this, MainActivity3.class);
+        //intent.putExtra("name", name);
+        Intent studentIntent = new Intent (this, welcome_screen.class);
+        Intent instructorIntent = new Intent (this, MainActivity3.class);
 
-        intent.putExtra("type", type);
+        if(type == instructorType) {
+            instructorIntent.putExtra("name", name);
 
-        startActivity(intent);
+        //startActivity(intent);
+            instructorIntent.putExtra("type", type);
+
+            startActivity(instructorIntent);
+        } else{
+            studentIntent.putExtra("name", name);
+
+            studentIntent.putExtra("type", type);
+
+            startActivity(studentIntent);
+        }
     }
     String m_Text = "";
     private void passAlert(){
@@ -190,11 +199,11 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+
     private void testPage(){
         Intent intent = new Intent(this, IntructorCoursePage.class);
         startActivity(intent);
 
     }
-
 
 }

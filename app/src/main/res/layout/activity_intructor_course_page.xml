@@ -72,38 +72,30 @@
         app:layout_editor_absoluteY="223dp" />
 
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Save"
-        app:layout_constraintBottom_toTopOf="@+id/textName"
-        app:layout_constraintStart_toStartOf="@+id/btnAssign" />
-
     <EditText
         android:id="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
 
-        android:ems="10"
+
         android:inputType="textPersonName"
         android:text=" "
         app:layout_constraintLeft_toLeftOf="@id/btnAssign"
         app:layout_constraintTop_toBottomOf="@+id/btnAssign" />
 
+
     <EditText
-        android:id="@+id/text2"
+        android:id="@+id/courseTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=" "
+        android:layout_marginRight="20dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textName" />
+
 
     <EditText
         android:id="@+id/text4"
@@ -111,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="9dp"
-        android:ems="10"
+
         android:inputType="textPersonName"
         android:text=" "
         app:layout_constraintStart_toStartOf="parent"
@@ -123,10 +115,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="15dp"
-        android:ems="10"
+        android:singleLine="false"
+
         android:inputType="textPersonName"
         android:text=" "
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text2" />
+        app:layout_constraintTop_toBottomOf="@+id/courseTime" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
