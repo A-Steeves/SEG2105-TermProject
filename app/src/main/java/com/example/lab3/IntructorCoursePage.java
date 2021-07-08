@@ -206,8 +206,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
                 courseTime.setText("");
                 text3.setText("");
                 text4.setText("");
-
-                db.removeCourseInfo(courseName);
+                db.unassignInstructor(courseName);
 
             }
         });
