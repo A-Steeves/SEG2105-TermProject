@@ -92,7 +92,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
 
             //Toast.makeText(getApplicationContext(),currentCourse.getDays(), Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(getApplicationContext(),"Here", Toast.LENGTH_SHORT).show();
+
 
             String day1, day2;
             String temp = currentCourse.getDays();
