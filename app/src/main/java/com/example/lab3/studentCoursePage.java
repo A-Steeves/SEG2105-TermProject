@@ -13,7 +13,7 @@ public class studentCoursePage extends AppCompatActivity {
 
     Button btnEnrol, btnUnEnrol;
 
-    TextView txtCourseName, txtCourseID, txtCapacity;
+    TextView txtCourseName, txtCourseID, txtCapacity, txtTeacher, txtDescription, txtDay1,txtDay2;
     int capacity;
     String courseName;
     Course currentCourse;
@@ -30,6 +30,11 @@ public class studentCoursePage extends AppCompatActivity {
         txtCourseName = findViewById(R.id.txtCourseName);
         txtCourseID = findViewById(R.id.txtCourseId);
         txtCapacity = findViewById(R.id.txtCapacity);
+
+        txtTeacher = findViewById(R.id.txtTeacher);
+        txtDescription= findViewById(R.id.txtDescription);
+        txtDay1 = findViewById(R.id.txtDay1);
+        txtDay2 = findViewById(R.id.txtDay2);
         db = new NewDBHandler(this);
 
         /*
@@ -44,19 +49,42 @@ public class studentCoursePage extends AppCompatActivity {
         btnUnEnrol.setEnabled(false);
 
 
+
+
+        String day1, day2;
+        String temp = currentCourse.getDays();
+        if (temp.contains("&")){
+            String[] parts = temp.split("&");
+            day1 = parts[0];
+            day2 = parts[1];
+        }else{
+            day1 = "NA";
+            day2 = "NA";
+        }
+
+        txtCourseName.setText(courseName);
+        txtCapacity.setText(capacity);
+        txtCourseID.setText(currentCourse.getCode());
+        txtDay1.setText(day1);
+        txtDay2.setText(day2);
+        txtDescription.setText(currentCourse.getDescription());
+        txtTeacher.setText(currentCourse.getInstructor());
+
+
+
+
         btnEnrol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(capacity > 0){
                     /*
-                    decrementCourseCapacity();   //We might need to make a method in database to do this.
-
+                    db.addCourseInfo(courseName, currentCourse.getDays(),currentCourse.getHours(),currentCourse.getDescription(), capacity-1 );
                     AddStudent to course List.
                     Add course to student list.
+                    */
 
 
 
-                     */
                     btnUnEnrol.setEnabled(true);
                     btnUnEnrol.setVisibility(View.VISIBLE);
                     btnEnrol.setEnabled(false);
@@ -71,7 +99,8 @@ public class studentCoursePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 /*
-                incrementCourseCapacity();
+                db.addCourseInfo(courseName, currentCourse.getDays(),currentCourse.getHours(),currentCourse.getDescription(), capacity+1);
+
                 remove student from course list.
                 remove course from student list.
 

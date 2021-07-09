@@ -49,10 +49,49 @@
         android:id="@+id/btnUnEnrol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="78dp"
+        android:layout_marginTop="250dp"
         android:layout_marginEnd="17dp"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnEnrol"
         app:layout_constraintTop_toBottomOf="@+id/txtCapacity" />
+
+    <TextView
+        android:id="@+id/txtDay1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="3dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/txtCapacity"
+        app:layout_constraintTop_toBottomOf="@+id/txtCapacity" />
+
+    <TextView
+        android:id="@+id/txtDay2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/txtDay1"
+        app:layout_constraintTop_toBottomOf="@+id/txtDay1" />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="18dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/txtDay2"
+        app:layout_constraintTop_toBottomOf="@+id/txtDay2" />
+
+    <TextView
+        android:id="@+id/txtTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="13dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/txtDescription"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>
