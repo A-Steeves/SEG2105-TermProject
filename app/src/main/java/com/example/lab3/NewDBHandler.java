@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -26,6 +25,11 @@ public class NewDBHandler extends SQLiteOpenHelper {
     private static final String COURSES_COLUMN_HOURS = "hours";
     private static final String COURSES_COLUMN_DESCRIPTION = "description";
     private static final String COURSES_COLUMN_STUDENT_CAPACITY = "studentcapacity";
+    private static final String COURSES_COLUMN_STUDENTS_ENROLLED = "studentsenrolled";
+    private static final String TABLE_ENROLLMENT = "enrollment";
+    private static final String ENROLLMENT_COLUMN_ID = "_id";
+    private static final String ENROLLMENT_COLUMN_USERNAME = "studentusername";
+    private static final String ENROLLMENT_COLUMN_COURSE = "coursename";
 
 
     public NewDBHandler(Context context){ super(context, DATABASE_NAME, null, DATABASE_VERSION); }
@@ -35,9 +39,11 @@ public class NewDBHandler extends SQLiteOpenHelper {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS +"(" + USERS_COLUMN_ID + " INTEGER PRIMARY KEY," + USERS_COLUMN_USERNAME + " TEXT," + USERS_COLUMN_PASSWORD + " TEXT,"  + USERS_COLUMN_ACCOUNT_TYPE + " TEXT" + ")";
         db.execSQL(CREATE_USERS_TABLE);
         String CREATE_COURSES_TABLE = "CREATE TABLE " + TABLE_COURSES +"(" + COURSES_COLUMN_ID + " INTEGER PRIMARY KEY, " + COURSES_COLUMN_CODE + " TEXT," + COURSES_COLUMN_NAME + " TEXT,"
-                + COURSES_COLUMN_INSTRUCTOR + " TEXT," + COURSES_COLUMN_DAYS +" TEXT," + COURSES_COLUMN_HOURS + " TEXT," + COURSES_COLUMN_DESCRIPTION + " TEXT," + COURSES_COLUMN_STUDENT_CAPACITY + " INTEGER"
-                + ")";
+                + COURSES_COLUMN_INSTRUCTOR + " TEXT," + COURSES_COLUMN_DAYS +" TEXT," + COURSES_COLUMN_HOURS + " TEXT," + COURSES_COLUMN_DESCRIPTION + " TEXT," + COURSES_COLUMN_STUDENT_CAPACITY + " INTEGER,"
+                + COURSES_COLUMN_STUDENTS_ENROLLED + " INTEGER"+ ")";
         db.execSQL(CREATE_COURSES_TABLE);
+        String CREATE_ENROLLMENT_TABLE = "CREATE TABLE "+ TABLE_ENROLLMENT + "(" + ENROLLMENT_COLUMN_ID + " INTEGER PRIMARY KEY, " + ENROLLMENT_COLUMN_USERNAME + " TEXT,"+ENROLLMENT_COLUMN_COURSE + " TEXT" + ")";
+        db.execSQL(CREATE_ENROLLMENT_TABLE);
     }
 
     @Override
@@ -57,6 +63,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         values.put(COURSES_COLUMN_HOURS, "NA");
         values.put(COURSES_COLUMN_DESCRIPTION, "NA");
         values.put(COURSES_COLUMN_STUDENT_CAPACITY, 0);
+        values.put(COURSES_COLUMN_STUDENTS_ENROLLED, 0);
 
         db.insert(TABLE_COURSES, null, values);
         db.close();
@@ -64,8 +71,18 @@ public class NewDBHandler extends SQLiteOpenHelper {
     }
 
     public Course findCourse(String courseName){
-        SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM "+TABLE_COURSES+" WHERE "+COURSES_COLUMN_NAME+" = \""+courseName+"\"";
+        return findC(query);
+    }
+
+    public Course findCourseByCode(String courseCode){
+        String query = "SELECT * FROM "+TABLE_COURSES+" WHERE "+COURSES_COLUMN_CODE+" = \""+courseCode+"\"";
+        return findC(query);
+    }
+
+    // The following is a helper method used find courses
+    private Course findC(String query){
+        SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
         // create an object and get the result
@@ -78,6 +95,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
             course.setHours(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_HOURS)));
             course.setDescription(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DESCRIPTION)));
             course.setStudentCapacity(cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)));
+            course.setStudentsEnrolled(cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED)));
         } else {
             course = null;
         }
@@ -86,27 +104,28 @@ public class NewDBHandler extends SQLiteOpenHelper {
         return course;
     }
 
-    public Course findCourseByCode(String courseCode){
+    public ArrayList<Course> findCourseByDay(String Day){
+        ArrayList<Course> courses = new ArrayList<Course>();
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM "+TABLE_COURSES+" WHERE "+COURSES_COLUMN_CODE+" = \""+courseCode+"\"";
-        Cursor cursor = db.rawQuery(query, null);
 
-        // create an object and get the result
-        Course course = new Course();
+        String query = "SELECT * FROM "+TABLE_COURSES+ " WHERE " + COURSES_COLUMN_DAYS + " LIKE \"%" + Day +"%\"";
+        Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()){
-            course.setCode(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_CODE)));
-            course.setName(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_NAME)));
-            course.setInstructor(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_INSTRUCTOR)));
-            course.setDays(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DAYS)));
-            course.setHours(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_HOURS)));
-            course.setDescription(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DESCRIPTION)));
-            course.setStudentCapacity(cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)));
-        } else {
-            course = null;
+            do{
+                courses.add(new Course(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_CODE)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_NAME)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_INSTRUCTOR)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DAYS)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_HOURS)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DESCRIPTION)),
+                        cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)),
+                        cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED))
+                ));
+            } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return course;
+        return courses;
     }
 
     public void addCourseInfo(String courseName, String days, String hours, String description, int studentCapacity){
@@ -125,6 +144,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
             values.put(COURSES_COLUMN_HOURS, hours);
             values.put(COURSES_COLUMN_DESCRIPTION, description);
             values.put(COURSES_COLUMN_STUDENT_CAPACITY, studentCapacity);
+            values.put(COURSES_COLUMN_STUDENTS_ENROLLED, cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED)));
             db.update(TABLE_COURSES, values, COURSES_COLUMN_ID+" = ?", new String[] {idStr});
         }
         cursor.close();
@@ -151,6 +171,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
             values.put(COURSES_COLUMN_HOURS, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_HOURS)));
             values.put(COURSES_COLUMN_DESCRIPTION, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DESCRIPTION)));
             values.put(COURSES_COLUMN_STUDENT_CAPACITY, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)));
+            values.put(COURSES_COLUMN_STUDENTS_ENROLLED, cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED)));
             db.update(TABLE_COURSES, values, COURSES_COLUMN_ID+" = ?", new String[] {idStr});
         }
         cursor.close();
@@ -176,6 +197,12 @@ public class NewDBHandler extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(COURSES_COLUMN_CODE, newCode);
             values.put(COURSES_COLUMN_NAME, newName);
+            values.put(COURSES_COLUMN_INSTRUCTOR, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_INSTRUCTOR)));
+            values.put(COURSES_COLUMN_DAYS, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DAYS)));
+            values.put(COURSES_COLUMN_HOURS, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_HOURS)));
+            values.put(COURSES_COLUMN_DESCRIPTION, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DESCRIPTION)));
+            values.put(COURSES_COLUMN_STUDENT_CAPACITY, cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)));
+            values.put(COURSES_COLUMN_STUDENTS_ENROLLED, cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED)));
             db.update(TABLE_COURSES, values, COURSES_COLUMN_ID+" = ?", new String[] {idStr});
         }
         cursor.close();
@@ -212,7 +239,8 @@ public class NewDBHandler extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DAYS)),
                         cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_HOURS)),
                         cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DESCRIPTION)),
-                        cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY))
+                        cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)),
+                        cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED))
                         ));
             } while (cursor.moveToNext());
         }
@@ -338,5 +366,119 @@ public class NewDBHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return accounts;
+    }
+
+    public void enroll(String studentUsername, String course){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ENROLLMENT_COLUMN_USERNAME, studentUsername);
+        values.put(ENROLLMENT_COLUMN_COURSE, course);
+
+
+        db.insert(TABLE_ENROLLMENT, null, values);
+        enrollStudent(course, 1);
+
+
+        db.close();
+    }
+
+    public boolean unenroll(String username, String courseName){
+        boolean result = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM "+TABLE_ENROLLMENT+" WHERE "+ENROLLMENT_COLUMN_USERNAME+" = \""
+                +username+"\" AND" + ENROLLMENT_COLUMN_COURSE+ " = \"" + courseName+ "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            String idStr = cursor.getString(0);
+            db.delete(TABLE_ENROLLMENT, ENROLLMENT_COLUMN_ID+" = "+idStr, null);
+            result = true;
+            enrollStudent(courseName, -1);
+        }
+        cursor.close();
+        db.close();
+        return result;
+    }
+
+    private void enrollStudent(String courseName, int amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM "+TABLE_COURSES+" WHERE "+COURSES_COLUMN_NAME+" = \""+courseName+"\"";
+        Cursor cursor = db.rawQuery(query, null);
+
+        // edit course information
+        String idStr;
+        if (cursor.moveToFirst()){
+            idStr = cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_ID));
+            ContentValues values = new ContentValues();
+            values.put(COURSES_COLUMN_CODE, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_CODE)));
+            values.put(COURSES_COLUMN_NAME, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_NAME)));
+            values.put(COURSES_COLUMN_INSTRUCTOR, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_INSTRUCTOR)));
+            values.put(COURSES_COLUMN_DAYS, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DAYS)));
+            values.put(COURSES_COLUMN_HOURS, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_HOURS)));
+            values.put(COURSES_COLUMN_DESCRIPTION, cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DESCRIPTION)));
+            values.put(COURSES_COLUMN_STUDENT_CAPACITY, cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)));
+            values.put(COURSES_COLUMN_STUDENTS_ENROLLED, cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED))+amount);
+            db.update(TABLE_COURSES, values, COURSES_COLUMN_ID+" = ?", new String[] {idStr});
+        }
+        cursor.close();
+        db.close();
+    }
+
+    public ArrayList<Account> studentsInCourse(String courseName){
+        ArrayList<Account> accounts = new ArrayList<Account>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM "+TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName +"\"";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do{
+                accounts.add(findAccountUsername(cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_USERNAME))));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return accounts;
+    }
+
+    public ArrayList<Course> studentCourseList(String studentUsername){
+        ArrayList<Course> courses = new ArrayList<Course>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM "+TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_USERNAME + " = \"" + studentUsername +"\"";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do{
+                courses.add(findCourse(cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_COURSE))));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return courses;
+    }
+
+    public static Day[] getCourseDayInfo(String s){
+        String[] days = s.split("&");
+        Day[] res = new Day[days.length];
+        String[] day;
+        String[] daytime;
+        for (int i = 0; i < days.length; i++){
+            day = days[i].split(": ");
+            daytime = day[1].split("-");
+            res[i] = new Day(day[0], timestampProcessing(daytime[0]), timestampProcessing(daytime[1]));
+        }
+        return res;
+    }
+
+    private static double timestampProcessing(String timestamp){
+        // Example of Input: "10:56 AM"
+        String[] dayInfo = timestamp.split(" ");
+        String[] time = dayInfo[0].split(":");
+        double hour = Double.parseDouble(time[0]);
+        if (dayInfo[1].equals("PM")){
+            hour += (double) 12.0;
+        }
+        return hour+(Double.parseDouble(time[1])/60.0);
     }
 }
