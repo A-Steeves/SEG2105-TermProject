@@ -464,9 +464,11 @@ public class NewDBHandler extends SQLiteOpenHelper {
         String[] day;
         String[] daytime;
         for (int i = 0; i < days.length; i++){
-            day = days[i].split(": ");
-            daytime = day[1].split("-");
-            res[i] = new Day(day[0], timestampProcessing(daytime[0]), timestampProcessing(daytime[1]));
+            if (!days[i].equals("NA")){
+                day = days[i].split(": ");
+                daytime = day[1].split("-");
+                res[i] = new Day(day[0], timestampProcessing(daytime[0]), timestampProcessing(daytime[1]));
+            }
         }
         return res;
     }
