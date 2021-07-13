@@ -27,6 +27,9 @@ public class Course {
         this.studentCapacity = studentCapacity;
         this.studentsEnrolled = studentsEnrolled;
     }
+    public boolean timeEquals( Course otherCourse ){
+        return this.days.equals(otherCourse.getDays()) && this.hours.equals(otherCourse.getHours());
+    }
 
     public String getCode(){
         return code;

@@ -467,13 +467,13 @@ public class NewDBHandler extends SQLiteOpenHelper {
             if (!days[i].equals("NA")){
                 day = days[i].split(": ");
                 daytime = day[1].split("-");
-                res[i] = new Day(day[0], timestampProcessing(daytime[0]), timestampProcessing(daytime[1]));
+                res[i] = new Day(day[0], timeStampProcessing(daytime[0]), timeStampProcessing(daytime[1]));
             }
         }
         return res;
     }
 
-    private static double timestampProcessing(String timestamp){
+    private static double timeStampProcessing(String timestamp){
         // Example of Input: "10:56 AM"
         String[] dayInfo = timestamp.split(" ");
         String[] time = dayInfo[0].split(":");
@@ -482,5 +482,17 @@ public class NewDBHandler extends SQLiteOpenHelper {
             hour += (double) 12.0;
         }
         return hour+(Double.parseDouble(time[1])/60.0);
+    }
+
+    public boolean isConflict( Course thisCourse, String studentUsername ) {
+
+        ArrayList<Course> thisList = studentCourseList(studentUsername);
+
+        for (int i = 0; i < thisList.size(); i++) {
+            if (thisList.get(i).timeEquals(thisCourse)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
