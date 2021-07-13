@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab3">
-        <activity android:name=".studentCoursePage"></activity>
+        <activity
+            android:name=".StudentTab"
+            android:label="@string/title_activity_student_tab"
+            android:theme="@style/Theme.Lab3.NoActionBar"></activity>
+        <activity android:name=".studentCoursePage" />
         <activity android:name=".courseInfo" />
         <activity android:name=".instructorPage" />
         <activity android:name=".IntructorCoursePage" />

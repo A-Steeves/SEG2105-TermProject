@@ -25,8 +25,12 @@
     <string name="tab_text_3">Courses</string>
     <string name="tab_text_4">Home</string>
     <string name="tab_text_5">Courses</string>
+    <string name="tab_text_6">Home</string>
+    <string name="tab_text_7">My Courses</string>
+    <string name="tab_text_8">All Courses</string>
     <string name="title_activity_main2">MainActivity2</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main3">MainActivity3</string>
+    <string name="title_activity_student_tab">StudentTab</string>
 </resources>

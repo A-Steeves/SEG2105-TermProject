@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     private void openUser(String name, String pass, String type){
         //Intent intent = new Intent (this, MainActivity3.class);
         //intent.putExtra("name", name);
-        Intent studentIntent = new Intent (this, welcome_screen.class);
+        Intent studentIntent = new Intent (this, StudentTab.class);
         Intent instructorIntent = new Intent (this, MainActivity3.class);
 
         if(type == instructorType) {
