@@ -465,15 +465,35 @@ public class NewDBHandler extends SQLiteOpenHelper {
 
         ArrayList<Course> thisList = studentCourseList(studentUsername);
         Day[] courseToAddDays = thisCourse.getCourseDayInfo();
+        int j = 0;
+        int k = 0;
 
         for (int i = 0; i < thisList.size(); i++) {
             Course tmpCourse = thisList.get(i);
             Day[] thisDayArr = tmpCourse.getCourseDayInfo();
-            for (int j = 0; j < courseToAddDays.length; j++) {
-                if (thisDayArr[i].getDay().equals(courseToAddDays[j].getDay())) {
-                    if (thisDayArr[i].getStartTime() == courseToAddDays[j].getStartTime() || thisDayArr[i].getEndTime() == courseToAddDays[j].getStartTime()) {
-                        return true;
+            j = 0;
+            k = 0;
+            while ((j < thisDayArr.length) && (k < thisDayArr.length)) {
+                if (thisDayArr[i].getDay() == null){
+                    j++;
+                } else if (courseToAddDays[j].getDay() == null){
+                    k++;
+                } else{
+                    if (thisDayArr[i].getDay().equals(courseToAddDays[j].getDay())) {
+                        if (thisDayArr[i].getStartTime() < courseToAddDays[j].getStartTime()) {
+                            if (thisDayArr[i].getEndTime() > courseToAddDays[j].getStartTime()){
+                                return true;
+                            }
+                        } else if (thisDayArr[i].getStartTime() > courseToAddDays[j].getStartTime()){
+                            if (thisDayArr[i].getStartTime() < courseToAddDays[j].getEndTime()){
+                                return true;
+                            }
+                        } else{
+                            return true;
+                        }
                     }
+                    j++;
+                    k++;
                 }
             }
         }
