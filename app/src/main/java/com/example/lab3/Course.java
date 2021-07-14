@@ -4,7 +4,7 @@ public class Course {
     private String code = new String("NA");
     private String name = new String("NA");
     private String instructor = new String("NA");
-    private String days = new String("NA");
+    private String days = "NA";
     private String hours = new String("NA");
     private String description = new String("NA");
     private int studentCapacity = 0;
@@ -27,9 +27,37 @@ public class Course {
         this.studentCapacity = studentCapacity;
         this.studentsEnrolled = studentsEnrolled;
     }
+
     public boolean timeEquals( Course otherCourse ){
         return this.days.equals(otherCourse.getDays()) && this.hours.equals(otherCourse.getHours());
     }
+
+    public Day[] getCourseDayInfo(){
+        String[] dayArr = days.split("&");
+        Day[] res = new Day[dayArr.length];
+        String[] day;
+        String[] daytime;
+        for (int i = 0; i < dayArr.length; i++){
+            if (!dayArr[i].equals("NA")){
+                day = dayArr[i].split(": ");
+                daytime = day[1].split("-");
+                res[i] = new Day(day[0], timeStampProcessing(daytime[0]), timeStampProcessing(daytime[1]));
+            }
+        }
+        return res;
+    }
+
+    private static double timeStampProcessing(String timestamp){
+        // Example of Input: "10:56 AM"
+        String[] dayInfo = timestamp.split(" ");
+        String[] time = dayInfo[0].split(":");
+        double hour = Double.parseDouble(time[0]);
+        if (dayInfo[1].equals("PM")){
+            hour += (double) 12.0;
+        }
+        return hour+(Double.parseDouble(time[1])/60.0);
+    }
+
 
     public String getCode(){
         return code;
