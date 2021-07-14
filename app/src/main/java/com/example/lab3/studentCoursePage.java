@@ -15,7 +15,7 @@ public class studentCoursePage extends AppCompatActivity {
 
     TextView txtCourseName, txtCourseID, txtCapacity, txtTeacher, txtDescription, txtDay1,txtDay2;
     int capacity;
-    String courseName;
+    String courseName, studentName;
     Course currentCourse;
     NewDBHandler db;
     @Override
@@ -37,13 +37,14 @@ public class studentCoursePage extends AppCompatActivity {
         txtDay2 = findViewById(R.id.txtDay2);
         db = new NewDBHandler(this);
 
-        /*
+
 
         courseName = getIntent().getStringExtra("courseName");
+        studentName = getIntent().getStringExtra("instructorName");
         currentCourse = db.findCourse(courseName);
-        capacity = currentCourse.getCapacity();
+        capacity = currentCourse.getStudent_capacity();
 
-         */
+
 
         btnUnEnrol.setVisibility(View.GONE);
         btnUnEnrol.setEnabled(false);
@@ -63,25 +64,27 @@ public class studentCoursePage extends AppCompatActivity {
         }
 
         txtCourseName.setText(courseName);
-        txtCapacity.setText(capacity);
+        //txtCapacity.setText(capacity);
         txtCourseID.setText(currentCourse.getCode());
         txtDay1.setText(day1);
         txtDay2.setText(day2);
         txtDescription.setText(currentCourse.getDescription());
         txtTeacher.setText(currentCourse.getInstructor());
 
-
+        if(db.isConflict(currentCourse, studentName)){
+            Toast.makeText(getApplicationContext(),"There is a time conflict in your schedule.", Toast.LENGTH_SHORT).show();
+            btnEnrol.setVisibility(View.GONE);
+        }
 
 
         btnEnrol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(capacity > 0){
-                    /*
+
                     db.addCourseInfo(courseName, currentCourse.getDays(),currentCourse.getHours(),currentCourse.getDescription(), capacity-1 );
-                    AddStudent to course List.
-                    Add course to student list.
-                    */
+                    db.enroll(studentName, courseName);
+
 
 
 
@@ -98,14 +101,13 @@ public class studentCoursePage extends AppCompatActivity {
         btnUnEnrol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
+
                 db.addCourseInfo(courseName, currentCourse.getDays(),currentCourse.getHours(),currentCourse.getDescription(), capacity+1);
 
-                remove student from course list.
-                remove course from student list.
+                db.unenroll(studentName, courseName);
 
 
-                 */
+
                 btnUnEnrol.setEnabled(false);
                 btnUnEnrol.setVisibility(View.GONE);
             }
