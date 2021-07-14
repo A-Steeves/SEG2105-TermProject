@@ -474,18 +474,18 @@ public class NewDBHandler extends SQLiteOpenHelper {
             j = 0;
             k = 0;
             while ((j < thisDayArr.length) && (k < thisDayArr.length)) {
-                if (thisDayArr[i].getDay() == null){
+                if (thisDayArr[j].getDay() == null){
                     j++;
-                } else if (courseToAddDays[j].getDay() == null){
+                } else if (courseToAddDays[k].getDay() == null){
                     k++;
                 } else{
-                    if (thisDayArr[i].getDay().equals(courseToAddDays[j].getDay())) {
-                        if (thisDayArr[i].getStartTime() < courseToAddDays[j].getStartTime()) {
-                            if (thisDayArr[i].getEndTime() > courseToAddDays[j].getStartTime()){
+                    if (thisDayArr[j].getDay().equals(courseToAddDays[k].getDay())) {
+                        if (thisDayArr[j].getStartTime() < courseToAddDays[k].getStartTime()) {
+                            if (thisDayArr[j].getEndTime() > courseToAddDays[k].getStartTime()){
                                 return true;
                             }
-                        } else if (thisDayArr[i].getStartTime() > courseToAddDays[j].getStartTime()){
-                            if (thisDayArr[i].getStartTime() < courseToAddDays[j].getEndTime()){
+                        } else if (thisDayArr[j].getStartTime() > courseToAddDays[k].getStartTime()){
+                            if (thisDayArr[j].getStartTime() < courseToAddDays[k].getEndTime()){
                                 return true;
                             }
                         } else{
