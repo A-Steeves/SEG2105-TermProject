@@ -492,8 +492,14 @@ public class NewDBHandler extends SQLiteOpenHelper {
                             return true;
                         }
                     }
-                    j++;
-                    k++;
+                    if (j < k){
+                        j++;
+                    } else if (k < j){
+                        k++;
+                    } else {
+                        j++;
+                        k++;
+                    }
                 }
             }
         }
