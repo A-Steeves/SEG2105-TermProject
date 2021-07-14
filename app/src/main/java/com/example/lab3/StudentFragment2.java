@@ -63,6 +63,8 @@ public class StudentFragment2 extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         courseList.clear();
+                        myDb.enroll("ajay.mundi@gmail.com", "SEG2105");
+                        myDb.enroll("ajay.mundi@gmail.com", "CVG2105");
                         courseList.addAll(myDb.studentCourseList(name));
                         adapter.notifyDataSetChanged();
                     }
@@ -81,7 +83,7 @@ public class StudentFragment2 extends Fragment {
 
 
 
-                Intent intent = new Intent(getActivity(), IntructorCoursePage.class);
+                Intent intent = new Intent(getActivity(), studentCoursePage.class);
                 intent.putExtra("courseName", courseName);
                 intent.putExtra("courseID", courseCode);
                 intent.putExtra("instructorName", tempInstructor);

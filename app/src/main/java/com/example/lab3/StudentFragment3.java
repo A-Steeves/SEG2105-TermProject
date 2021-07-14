@@ -79,7 +79,7 @@ public class StudentFragment3 extends Fragment {
 
 
 
-                Intent intent = new Intent(getActivity(), IntructorCoursePage.class);
+                Intent intent = new Intent(getActivity(), studentCoursePage.class);
                 intent.putExtra("courseName", courseName);
                 intent.putExtra("courseID", courseCode);
                 intent.putExtra("instructorName", tempInstructor);
