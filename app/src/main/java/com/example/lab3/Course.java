@@ -34,14 +34,26 @@ public class Course {
 
     public Day[] getCourseDayInfo(){
         String[] dayArr = days.split("&");
-        Day[] res = new Day[dayArr.length];
+        Day[] res = new Day[5];
         String[] day;
         String[] daytime;
+        Day currentDay;
         for (int i = 0; i < dayArr.length; i++){
             if (!dayArr[i].equals("NA")){
                 day = dayArr[i].split(": ");
                 daytime = day[1].split("-");
-                res[i] = new Day(day[0], timeStampProcessing(daytime[0]), timeStampProcessing(daytime[1]));
+                currentDay = new Day(day[0], timeStampProcessing(daytime[0]), timeStampProcessing(daytime[1]));
+                if (currentDay.getDay().equals("Monday")){
+                    res[0] = currentDay;
+                } else if (currentDay.getDay().equals("Tuesday")){
+                    res[1] = currentDay;
+                } else if (currentDay.getDay().equals("Wednesday")) {
+                    res[2] = currentDay;
+                } else if (currentDay.getDay().equals("Thursday")) {
+                    res[3] = currentDay;
+                } else if (currentDay.getDay().equals("Friday")) {
+                    res[4] = currentDay;
+                }
             }
         }
         return res;
