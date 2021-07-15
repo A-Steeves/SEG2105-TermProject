@@ -64,14 +64,20 @@ public class studentCoursePage extends AppCompatActivity {
         }
 
         txtCourseName.setText(courseName);
-        txtCapacity.setText("Current course capacity: " + String.valueOf(capacity));
+        txtCapacity.setText("Current course capacity: " + String.valueOf(currentCourse.getStudent_capacity()-currentCourse.getStudentsEnrolled()));
         txtCourseID.setText(currentCourse.getCode());
         txtDay1.setText(day1);
         txtDay2.setText(day2);
         txtDescription.setText("Course Description: " +currentCourse.getDescription());
         txtTeacher.setText(currentCourse.getInstructor());
 
-        if(db.isConflict(currentCourse, studentName)){
+
+        if(db.isStudentInCourse(studentName, courseName)){
+            btnEnrol.setVisibility(View.GONE);
+            btnUnEnrol.setVisibility(View.VISIBLE);
+            btnUnEnrol.setEnabled(true);
+        }
+        else if(db.isConflict(currentCourse, studentName)){
             Toast.makeText(getApplicationContext(),"There is a time conflict in your schedule.", Toast.LENGTH_SHORT).show();
             btnEnrol.setVisibility(View.GONE);
         }
@@ -82,10 +88,11 @@ public class studentCoursePage extends AppCompatActivity {
             public void onClick(View v) {
                 if(capacity > 0){
 
-                    db.addCourseInfo(courseName, currentCourse.getDays(),currentCourse.getHours(),currentCourse.getDescription(), capacity-1 );
+
+
                     db.enroll(studentName, courseName);
-
-
+                    Course temp = db.findCourse(courseName);
+                    txtCapacity.setText("Current course capacity: " + String.valueOf(temp.getStudent_capacity()-temp.getStudentsEnrolled()));
 
 
                     btnUnEnrol.setEnabled(true);
@@ -102,14 +109,19 @@ public class studentCoursePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                db.addCourseInfo(courseName, currentCourse.getDays(),currentCourse.getHours(),currentCourse.getDescription(), capacity+1);
 
                 db.unenroll(studentName, courseName);
 
 
+                Course temp = db.findCourse(courseName);
+                txtCapacity.setText("Current course capacity: " + String.valueOf(temp.getStudent_capacity()-temp.getStudentsEnrolled()));
+
 
                 btnUnEnrol.setEnabled(false);
                 btnUnEnrol.setVisibility(View.GONE);
+
+                btnEnrol.setEnabled(true);
+                btnEnrol.setVisibility(View.VISIBLE);
             }
         });
 
