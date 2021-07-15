@@ -124,7 +124,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
             btnEdit.setEnabled(false);
             btnUnassign.setEnabled(false);
 
-            Toast.makeText(getApplicationContext(),"Here2", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"Here2", Toast.LENGTH_SHORT).show();
 
             cInstructor.setText(currentCourse.getInstructor());
 
