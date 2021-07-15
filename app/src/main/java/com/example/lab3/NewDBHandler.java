@@ -390,7 +390,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * FROM " + TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_USERNAME + " = \""
-                + username + "\" AND" + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
+                + username + "\" AND " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             String idStr = cursor.getString(0);
@@ -426,6 +426,22 @@ public class NewDBHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
+    }
+
+    public boolean isStudentInCourse(String username, String courseName){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_USERNAME + " = \""
+                + username + "\" AND " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            cursor.close();
+            db.close();
+            return true;
+        }
+        cursor.close();
+        db.close();
+        return false;
     }
 
     public ArrayList<Account> studentsInCourse(String courseName) {
