@@ -47,7 +47,7 @@ public class StudentFragment3 extends Fragment {
         listView = v.findViewById(R.id.listview3B);
         courseList = new ArrayList<Course>();
         NewDBHandler myDb = new NewDBHandler( getActivity() );
-        courseList = myDb.allCourses();
+        courseList = myDb.validCourses();
 
 
 
@@ -61,7 +61,7 @@ public class StudentFragment3 extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         courseList.clear();
-                        courseList.addAll(myDb.allCourses());
+                        courseList.addAll(myDb.validCourses());
                         adapter.notifyDataSetChanged();
                     }
                 }

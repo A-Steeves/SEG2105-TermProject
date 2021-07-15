@@ -476,6 +476,32 @@ public class NewDBHandler extends SQLiteOpenHelper {
         return courses;
     }
 
+    public ArrayList<Course> validCourses() {
+        ArrayList<Course> courses = new ArrayList<Course>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_COURSES;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Course isValid = new Course(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_CODE)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_NAME)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_INSTRUCTOR)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DAYS)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_HOURS)),
+                        cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_DESCRIPTION)),
+                        cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)),
+                        cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED))
+                );
+                if(!isValid.getDescription().equals("NA")){
+                    courses.add(isValid);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return courses;
+    }
 
     public boolean isConflict(Course thisCourse, String studentUsername) {
 
