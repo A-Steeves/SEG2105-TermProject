@@ -516,9 +516,9 @@ public class NewDBHandler extends SQLiteOpenHelper {
             j = 0;
             k = 0;
             while ((j < thisDayArr.length) && (k < thisDayArr.length)) {
-                if (thisDayArr[j].getDay() == null){
+                if (thisDayArr[j] == null){
                     j++;
-                } else if (courseToAddDays[k].getDay() == null){
+                } else if (courseToAddDays[k] == null){
                     k++;
                 } else{
                     if (thisDayArr[j].getDay().equals(courseToAddDays[k].getDay())) {
