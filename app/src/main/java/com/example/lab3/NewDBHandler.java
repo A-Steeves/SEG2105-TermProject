@@ -493,7 +493,8 @@ public class NewDBHandler extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENT_CAPACITY)),
                         cursor.getInt(cursor.getColumnIndex(COURSES_COLUMN_STUDENTS_ENROLLED))
                 );
-                if(!isValid.getDescription().equals("NA")){
+                Integer cap = isValid.getStudent_capacity();
+                if(!isValid.getDescription().equals("NA") && !cap.toString().isEmpty() && !isValid.getDays().equals("NA&NA")){
                     courses.add(isValid);
                 }
             } while (cursor.moveToNext());

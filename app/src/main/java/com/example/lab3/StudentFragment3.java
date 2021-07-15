@@ -1,13 +1,16 @@
 package com.example.lab3;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
@@ -33,6 +36,8 @@ public class StudentFragment3 extends Fragment {
     FloatingActionButton all;
     ImageButton searchCourse;
     ImageButton searchCode;
+    ImageButton searchDay;
+    Spinner weekday;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -41,15 +46,21 @@ public class StudentFragment3 extends Fragment {
         View v = inflater.inflate(R.layout.frag_student3, container, false);
 
         //find = v.findViewById(R.id.Find3);
+
         searchCourse = v.findViewById(R.id.imageButtonB);
         searchCode = v.findViewById(R.id.imageButton2B);
+        searchDay = v.findViewById(R.id.imageButton2C);
+
         all = v.findViewById(R.id.floatingActionButtonB);
         listView = v.findViewById(R.id.listview3B);
         courseList = new ArrayList<Course>();
         NewDBHandler myDb = new NewDBHandler( getActivity() );
         courseList = myDb.validCourses();
 
-
+        weekday = (Spinner)v.findViewById(R.id.endFirst2C);
+        String[] days = new String[]{"Select a Day ▼","Monday","Tuesday","Wednesday","Thursday","Friday"};
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, days);
+        weekday.setAdapter(adapter1);
 
         courseListAdapter adapter = new courseListAdapter(getActivity(), R.layout.course_adapter_view_layout, courseList);
         listView.setAdapter(adapter);
@@ -115,7 +126,7 @@ public class StudentFragment3 extends Fragment {
         searchCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View r) {
-                TextView codeIn = v.findViewById(R.id.CourseCode1A);
+                TextView codeIn = v.findViewById(R.id.CourseCode1B);
                 String code = codeIn.getText().toString();
                 Course foundbycode = myDb.findCourseByCode(code);
                 Boolean courseCheck = validateCourseCode();
@@ -131,11 +142,32 @@ public class StudentFragment3 extends Fragment {
             }
         });
 
+        searchDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View r) {
+
+                Spinner dayIn = v.findViewById(R.id.endFirst2C);
+                //String day = dayIn.getText().toString();
+                String day = weekday.getSelectedItem().toString();
+
+                if (day.equals("Select a Day ▼")) {
+                    TextView errorText = (TextView)weekday.getSelectedView();
+                    errorText.setError("");
+                    errorText.setTextColor(Color.RED);//just to highlight that this is an error
+                    errorText.setText("Please select a day");//changes the selected item text to this
+                } else {
+                    courseList.clear();
+                    courseList.addAll(myDb.findCourseByDay(day));
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View r) {
                 courseList.clear();
-                courseList.addAll(myDb.allCourses());
+                courseList.addAll(myDb.validCourses());
                 adapter.notifyDataSetChanged();
             }
         });
