@@ -64,11 +64,11 @@ public class studentCoursePage extends AppCompatActivity {
         }
 
         txtCourseName.setText(courseName);
-        //txtCapacity.setText(capacity);
+        txtCapacity.setText("Current course capacity: " + String.valueOf(capacity));
         txtCourseID.setText(currentCourse.getCode());
         txtDay1.setText(day1);
         txtDay2.setText(day2);
-        txtDescription.setText(currentCourse.getDescription());
+        txtDescription.setText("Course Description: " +currentCourse.getDescription());
         txtTeacher.setText(currentCourse.getInstructor());
 
         if(db.isConflict(currentCourse, studentName)){

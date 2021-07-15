@@ -10,15 +10,20 @@
         android:id="@+id/txtCourseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="106dp"
+        android:layout_marginTop="36dp"
         android:text="courseName"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.104"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtCourseId"
         android:layout_width="wrap_content"
+        android:textSize="25dp"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="courseID"
@@ -26,12 +31,15 @@
         app:layout_constraintTop_toBottomOf="@+id/txtCourseName" />
 
     <TextView
-        android:id="@+id/txtCapacity"
+        android:id="@+id/txtTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="27dp"
         android:text="TextView"
+
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txtCourseId"
         app:layout_constraintTop_toBottomOf="@+id/txtCourseId" />
 
@@ -39,22 +47,24 @@
         android:id="@+id/btnEnrol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="Button"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnUnEnrol"
-        app:layout_constraintEnd_toStartOf="@+id/btnUnEnrol"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="250dp"
+
+        android:text="Enroll"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTeacher" />
 
     <Button
         android:id="@+id/btnUnEnrol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
-        android:layout_marginEnd="17dp"
-        android:text="Button"
+        android:layout_marginEnd="100dp"
+        android:text="Unenroll"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnEnrol"
-        app:layout_constraintTop_toBottomOf="@+id/txtCapacity" />
+
+        app:layout_constraintTop_toBottomOf="@+id/txtTeacher" />
 
     <TextView
         android:id="@+id/txtDay1"
@@ -63,8 +73,9 @@
         android:layout_marginTop="21dp"
         android:layout_marginEnd="3dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/txtCapacity"
-        app:layout_constraintTop_toBottomOf="@+id/txtCapacity" />
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="@+id/txtTeacher"
+        app:layout_constraintTop_toBottomOf="@+id/txtTeacher" />
 
     <TextView
         android:id="@+id/txtDay2"
@@ -72,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
         android:text="TextView"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/txtDay1"
         app:layout_constraintTop_toBottomOf="@+id/txtDay1" />
 
@@ -82,16 +94,18 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="18dp"
         android:text="TextView"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/txtDay2"
         app:layout_constraintTop_toBottomOf="@+id/txtDay2" />
 
     <TextView
-        android:id="@+id/txtTeacher"
+        android:id="@+id/txtCapacity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="13dp"
         android:text="TextView"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/txtDescription"
         app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>
