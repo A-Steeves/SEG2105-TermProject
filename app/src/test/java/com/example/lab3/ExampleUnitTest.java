@@ -1,20 +1,10 @@
 package com.example.lab3;
 
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.List;
-
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 //import android.text;
 
@@ -30,8 +20,6 @@ public class ExampleUnitTest {
     @Test
     public void testAdminPassword(){
         adminCredentials admin = new adminCredentials();
-//        String name = adminCredentials.AdminUsername;
-//        String ps = adminCredentials.AdminPassword;
 
         assertEquals( "admin123", admin.getPassword() );
     }
@@ -43,6 +31,7 @@ public class ExampleUnitTest {
         thisAcc.setUsername( "Jing" );
         assertEquals( "Jing", thisAcc.getUsername());
     }
+
     @Test
     public void testAccountPs(){
         Account thisAcc = new Account();
@@ -69,8 +58,97 @@ public class ExampleUnitTest {
         assertEquals("SEG", thisCourse.getName());
 
     }
+
     @Test
-    public void testUserValidPassword(){
-        assertFalse( MainActivity.validatePassword("123213213"));
+    public void testGetDay(){
+        Day thisDay = new Day( "Wednesday", 11, 12.2);
+
+        assertEquals( "Wednesday", thisDay.getDay());
+    }
+
+    @Test
+    public void testGetCourseDaysInfo(){
+        Course thisCourse = new Course();
+
+        thisCourse.setDays("Monday: 10:00 AM-11:00 AM");
+
+        Day[] dayArr = thisCourse.getCourseDayInfo();
+
+        assertEquals("Monday", dayArr[0].getDay());
+        assertEquals(10.0, 0.0, dayArr[0].getStartTime());
+        assertEquals(11.0, 0.0, dayArr[0].getEndTime());
+    }
+
+    @Test
+    public void testTimeStampProcessing(){
+        Course thisCourse = new Course();
+
+        double testDouble = thisCourse.timeStampProcessing("12:00 PM");
+
+        assertEquals(24, 0.0, testDouble);
+
+    }
+    @Test
+    public void testGetStartTime(){
+        Day thisDay = new Day(null, 9.0, 0.0);
+
+        double testDouble = thisDay.getStartTime();
+
+        assertEquals(9.0, 0.0, testDouble);
+    }
+    @Test
+    public void testGetCourseDaysNull(){
+        Course thisCourse = new Course();
+
+        thisCourse.setDays(null);
+
+        Day[] dayArr = thisCourse.getCourseDayInfo();
+
+        assertNull(dayArr);
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

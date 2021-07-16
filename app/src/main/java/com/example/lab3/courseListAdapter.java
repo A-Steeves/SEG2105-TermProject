@@ -21,9 +21,8 @@ public class courseListAdapter extends ArrayAdapter<Course> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        String courseName = getItem(position).getName();
-        String courseCode = getItem(position).getCode();
-
+           String courseName = getItem(position).getName();
+           String courseCode = getItem(position).getCode();
         //Course course = new Course(courseName, courseCode);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);

@@ -4,7 +4,7 @@ public class Course {
     private String code = new String("NA");
     private String name = new String("NA");
     private String instructor = new String("NA");
-    private String days = "NA";
+    private String days = null;
     private String hours = new String("NA");
     private String description = new String("NA");
     private int studentCapacity = 0;
@@ -33,33 +33,39 @@ public class Course {
     }
 
     public Day[] getCourseDayInfo(){
-        String[] dayArr = days.split("&");
         Day[] res = new Day[5];
-        String[] day;
-        String[] daytime;
-        Day currentDay;
-        for (int i = 0; i < dayArr.length; i++){
-            if (!dayArr[i].equals("NA")){
-                day = dayArr[i].split(": ");
-                daytime = day[1].split("-");
-                currentDay = new Day(day[0], timeStampProcessing(daytime[0]), timeStampProcessing(daytime[1]));
-                if (currentDay.getDay().equals("Monday")){
-                    res[0] = currentDay;
-                } else if (currentDay.getDay().equals("Tuesday")){
-                    res[1] = currentDay;
-                } else if (currentDay.getDay().equals("Wednesday")) {
-                    res[2] = currentDay;
-                } else if (currentDay.getDay().equals("Thursday")) {
-                    res[3] = currentDay;
-                } else if (currentDay.getDay().equals("Friday")) {
-                    res[4] = currentDay;
+        // dayArr[0] != null dayArr[i].equals("NA")
+        if (days != null) {
+            String[] dayArr = days.split("&");
+            String[] day;
+            String[] daytime;
+            Day currentDay;
+            for (int i = 0; i < dayArr.length; i++) {
+                if (!dayArr[i].equals("NA")){
+                    day = dayArr[i].split(": "); // Monday: 10:30Am-11:15AM&NA
+                    daytime = day[1].split("-");
+                    currentDay = new Day(day[0], timeStampProcessing(daytime[0]), timeStampProcessing(daytime[1]));
+                    if (currentDay.getDay().equals("Monday")) {
+                        res[0] = currentDay;
+                    } else if (currentDay.getDay().equals("Tuesday")) {
+                        res[1] = currentDay;
+                    } else if (currentDay.getDay().equals("Wednesday")) {
+                        res[2] = currentDay;
+                    } else if (currentDay.getDay().equals("Thursday")) {
+                        res[3] = currentDay;
+                    } else if (currentDay.getDay().equals("Friday")) {
+                        res[4] = currentDay;
+                    }
                 }
             }
+        }
+        else {
+            res = null;
         }
         return res;
     }
 
-    private static double timeStampProcessing(String timestamp){
+    public static double timeStampProcessing(String timestamp){
         // Example of Input: "10:56 AM"
         String[] dayInfo = timestamp.split(" ");
         String[] time = dayInfo[0].split(":");
