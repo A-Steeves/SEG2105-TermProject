@@ -115,13 +115,23 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="15dp"
-        android:singleLine="false"
-
         android:inputType="textPersonName"
+
+        android:singleLine="false"
         android:text=" "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseTime" />
 
+    <Button
+        android:id="@+id/btnStudents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="192dp"
+        android:text="View Enrolled Students"
+
+        app:layout_constraintTop_toBottomOf="@+id/courseTime"
+        app:layout_constraintStart_toStartOf="@+id/courseTime"
+        tools:layout_editor_absoluteX="35dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class IntructorCoursePage extends AppCompatActivity  {
 
-    Button btnAssign, btnEdit, btnUnassign;
+    Button btnAssign, btnEdit, btnUnassign, btnStudent;
     EditText text1, text3, courseTime, text4;
     Course currentCourse;
     NewDBHandler db;
@@ -54,6 +54,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
         btnEdit = (Button)findViewById(R.id.btnEdit);
         btnUnassign = (Button)findViewById(R.id.btnUnassign);
 
+        btnStudent = (Button)findViewById(R.id.btnStudents);
 
 
 
@@ -69,6 +70,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
         text3.setEnabled(false);
         text4.setEnabled(false);
 
+
         text1.setVisibility(View.GONE);
         courseTime.setVisibility(View.GONE);
         text3.setVisibility(View.GONE);
@@ -83,7 +85,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
 
         btnAssign.setEnabled(true);
 
-
+        btnStudent.setVisibility(View.GONE);
 
         if(currentCourse.getInstructor().equals(instructorName)) {
             btnAssign.setEnabled(false);
@@ -92,7 +94,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
 
             //Toast.makeText(getApplicationContext(),currentCourse.getDays(), Toast.LENGTH_SHORT).show();
 
-
+            btnStudent.setVisibility(View.VISIBLE);
 
             String day1, day2;
             String temp = currentCourse.getDays();
@@ -165,6 +167,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
                 db.assignInstructor(courseName, instructorName);
 
                 btnAssign.setEnabled(false);
+                btnStudent.setVisibility(View.VISIBLE);
 
             }
         });
@@ -200,6 +203,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
                 courseTime.setVisibility(View.GONE);
                 text3.setVisibility(View.GONE);
                 text4.setVisibility(View.GONE);
+                btnStudent.setVisibility(View.GONE);
 
 
                 text1.setText("");
@@ -208,6 +212,13 @@ public class IntructorCoursePage extends AppCompatActivity  {
                 text4.setText("");
                 db.unassignInstructor(courseName);
 
+            }
+        });
+
+        btnStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                studentEnrolled(courseName);
             }
         });
 
@@ -225,6 +236,13 @@ public class IntructorCoursePage extends AppCompatActivity  {
         intent.putExtra("courseN", courseName);
         startActivity(intent);
 
+    }
+
+    public void studentEnrolled(String courseName){
+        Intent inte= new Intent(this, courseInfo.class);
+
+        inte.putExtra("courseN", courseName);
+        startActivity(inte);
     }
 
 
