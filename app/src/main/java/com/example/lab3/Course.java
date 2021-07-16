@@ -41,19 +41,21 @@ public class Course {
             String[] daytime;
             Day currentDay;
             for (int i = 0; i < dayArr.length; i++) {
-                day = dayArr[i].split(": ");
-                daytime = day[1].split("-");
-                currentDay = new Day(day[0], timeStampProcessing(daytime[0]), timeStampProcessing(daytime[1]));
-                if (currentDay.getDay().equals("Monday")) {
-                    res[0] = currentDay;
-                } else if (currentDay.getDay().equals("Tuesday")) {
-                    res[1] = currentDay;
-                } else if (currentDay.getDay().equals("Wednesday")) {
-                    res[2] = currentDay;
-                } else if (currentDay.getDay().equals("Thursday")) {
-                    res[3] = currentDay;
-                } else if (currentDay.getDay().equals("Friday")) {
-                    res[4] = currentDay;
+                if (!dayArr[i].equals("NA")){
+                    day = dayArr[i].split(": "); // Monday: 10:30Am-11:15AM&NA
+                    daytime = day[1].split("-");
+                    currentDay = new Day(day[0], timeStampProcessing(daytime[0]), timeStampProcessing(daytime[1]));
+                    if (currentDay.getDay().equals("Monday")) {
+                        res[0] = currentDay;
+                    } else if (currentDay.getDay().equals("Tuesday")) {
+                        res[1] = currentDay;
+                    } else if (currentDay.getDay().equals("Wednesday")) {
+                        res[2] = currentDay;
+                    } else if (currentDay.getDay().equals("Thursday")) {
+                        res[3] = currentDay;
+                    } else if (currentDay.getDay().equals("Friday")) {
+                        res[4] = currentDay;
+                    }
                 }
             }
         }
