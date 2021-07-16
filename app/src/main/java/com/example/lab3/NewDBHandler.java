@@ -444,15 +444,15 @@ public class NewDBHandler extends SQLiteOpenHelper {
         return false;
     }
 
-    public ArrayList<Account> studentsInCourse(String courseName) {
-        ArrayList<Account> accounts = new ArrayList<Account>();
+    public ArrayList<String> studentsInCourse(String courseName) {
+        ArrayList<String> accounts = new ArrayList<String>();
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * FROM " + TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                accounts.add(findAccountUsername(cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_USERNAME))));
+                accounts.add(findAccountUsername(cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_USERNAME))).getUsername());
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -535,6 +535,8 @@ public class NewDBHandler extends SQLiteOpenHelper {
                             return true;
                         }
                     }
+                    // [Tuesday, Wednesday]
+                    // [Monday, Tuesday]
                     if (j < k){
                         j++;
                     } else if (k < j){
