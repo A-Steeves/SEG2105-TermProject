@@ -155,6 +155,16 @@ public class NewDBHandler extends SQLiteOpenHelper {
 
     public void removeCourseInfo(String courseName) {
         addCourseInfo(courseName, new String("NA"), new String("NA"), new String("NA"), 0);
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            String idStr = cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_ID));
+            db.delete(TABLE_ENROLLMENT, ENROLLMENT_COLUMN_ID + " = " + idStr, null);
+        }
+        cursor.close();
+        db.close();
+
     }
 
     public void assignInstructor(String courseName, String instructor) {
@@ -222,6 +232,14 @@ public class NewDBHandler extends SQLiteOpenHelper {
             String idStr = cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_ID));
             result = db.delete(TABLE_COURSES, COURSES_COLUMN_ID + " = " + idStr, null) > 0;
         }
+
+        query = "SELECT * FROM " + TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
+        cursor = db.rawQuery(query, null);
+        if (cursor.moveToNext()) {
+            String idStr = cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_ID));
+            db.delete(TABLE_ENROLLMENT, ENROLLMENT_COLUMN_ID + " = " + idStr, null);
+        }
+
         cursor.close();
         db.close();
         return result;
@@ -347,6 +365,13 @@ public class NewDBHandler extends SQLiteOpenHelper {
             db.delete(TABLE_USERS, USERS_COLUMN_ID + " = " + idStr, null);
             result = true;
         }
+
+        query = "SELECT * FROM " + TABLE_COURSES + " WHERE " + COURSES_COLUMN_INSTRUCTOR + " = \"" + username + "\"";
+        cursor = db.rawQuery(query, null);
+        if (cursor.moveToNext()){
+            unassignInstructor(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_NAME)));
+        }
+
         cursor.close();
         db.close();
         return result;
