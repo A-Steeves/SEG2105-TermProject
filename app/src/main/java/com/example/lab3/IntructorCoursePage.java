@@ -239,7 +239,7 @@ public class IntructorCoursePage extends AppCompatActivity  {
     }
 
     public void studentEnrolled(String courseName){
-        Intent inte= new Intent(this, courseInfo.class);
+        Intent inte= new Intent(this, EnrolledStudents.class);
 
         inte.putExtra("courseN", courseName);
         startActivity(inte);

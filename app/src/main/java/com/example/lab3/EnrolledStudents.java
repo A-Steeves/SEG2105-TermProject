@@ -11,8 +11,9 @@ public class EnrolledStudents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enrolled_students);
+        NewDBHandler db = new NewDBHandler(this);
 
-
+        String courseName = getIntent().toString();
         list = findViewById(R.id.SHOW);
 
 
