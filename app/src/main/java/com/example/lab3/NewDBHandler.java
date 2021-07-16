@@ -155,16 +155,10 @@ public class NewDBHandler extends SQLiteOpenHelper {
 
     public void removeCourseInfo(String courseName) {
         addCourseInfo(courseName, new String("NA"), new String("NA"), new String("NA"), 0);
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
-        Cursor cursor = db.rawQuery(query, null);
-        while (cursor.moveToNext()) {
-            String idStr = cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_ID));
-            db.delete(TABLE_ENROLLMENT, ENROLLMENT_COLUMN_ID + " = " + idStr, null);
+        ArrayList<String> students = studentsInCourse(courseName);
+        for (int i = 0; i <students.size(); i++){
+            unenroll(students.get(i), courseName);
         }
-        cursor.close();
-        db.close();
-
     }
 
     public void assignInstructor(String courseName, String instructor) {
