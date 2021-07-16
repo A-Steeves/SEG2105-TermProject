@@ -158,7 +158,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
         Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()) {
+        while (cursor.moveToNext()) {
             String idStr = cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_ID));
             db.delete(TABLE_ENROLLMENT, ENROLLMENT_COLUMN_ID + " = " + idStr, null);
         }
@@ -235,7 +235,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
 
         query = "SELECT * FROM " + TABLE_ENROLLMENT + " WHERE " + ENROLLMENT_COLUMN_COURSE + " = \"" + courseName + "\"";
         cursor = db.rawQuery(query, null);
-        if (cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             String idStr = cursor.getString(cursor.getColumnIndex(ENROLLMENT_COLUMN_ID));
             db.delete(TABLE_ENROLLMENT, ENROLLMENT_COLUMN_ID + " = " + idStr, null);
         }
@@ -368,7 +368,7 @@ public class NewDBHandler extends SQLiteOpenHelper {
 
         query = "SELECT * FROM " + TABLE_COURSES + " WHERE " + COURSES_COLUMN_INSTRUCTOR + " = \"" + username + "\"";
         cursor = db.rawQuery(query, null);
-        if (cursor.moveToNext()){
+        while (cursor.moveToNext()){
             unassignInstructor(cursor.getString(cursor.getColumnIndex(COURSES_COLUMN_NAME)));
         }
 
